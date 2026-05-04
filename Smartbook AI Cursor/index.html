@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartBook AI | Contabilidad automatizada con IA</title>
+    <meta
+      name="description"
+      content="Automatiza tu contabilidad con IA: sube facturas, nóminas y albaranes y genera asientos contables exportables en Excel o XML."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.pravatar.cc; font-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+    <link rel="preconnect" href="https://i.pravatar.cc" crossorigin />
+    <link rel="dns-prefetch" href="//i.pravatar.cc" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260501-1" />
+  </head>
+  <body>
+    <header class="navbar" id="navbar">
+      <div class="container nav-inner">
+        <a href="#" class="logo" aria-label="SmartBook AI - Inicio">
+          <img src="logo.png" alt="SmartBook AI" class="logo-img" height="36" />
+        </a>
+        <a href="#" class="nav-headmark" aria-label="SmartBook AI - Inicio">
+          <canvas class="nav-headmark-canvas" width="34" height="34" aria-hidden="true"></canvas>
+        </a>
+        <nav class="nav-links" aria-label="Enlaces principales">
+          <span class="nav-pill" aria-hidden="true"></span>
+          <a href="contact.html" data-label="Contáctanos"><span>Contáctanos</span></a>
+          <a href="about.html" data-label="Quiénes somos"><span>Quiénes somos</span></a>
+          <a href="pricing.html" data-label="Planes de suscripción"><span>Planes de suscripción</span></a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-login" href="contact.html" data-label="Iniciar sesión">
+            <span>Iniciar sesión</span>
+          </a>
+          <a class="btn btn-primary" href="pricing.html" data-label="Prueba gratis">
+            <span>Prueba gratis</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="hero-stage">
+        <div class="hero-sticky">
+          <div class="hero-video-layer">
+            <video class="hero-video" autoplay muted loop playsinline preload="metadata">
+              <source src="hero-video.mp4" type="video/mp4" />
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
+          <div class="container hero-overlay" id="hero-overlay">
+            <div class="hero-overlay-panel">
+              <p class="kicker">CONTABILIDAD CON IA · PARA AUTÓNOMOS Y GESTORÍAS</p>
+              <h1>¿Imaginas que tus facturas se crearan solas?</h1>
+              <p class="hero-subtitle">
+                Simplifica tu gestión contable con IA. Sin conocimientos contables. Para autónomos,
+                pymes y gestorías.
+              </p>
+              <a href="pricing.html" class="btn btn-primary btn-hero">Empieza gratis</a>
+              <p class="hero-bullets">
+                ✓ Sin conocimientos contables · ✓ Facturas, nóminas y albaranes · ✓ Exportación
+                Excel y XML
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band home-band-purple">
+        <div class="container home-split home-split-video reveal">
+          <div class="home-copy">
+            <p class="section-label"></p>
+            <h2>Genera ya tus documentos personalizados.</h2>
+            <p>
+              Empezando desde tan solo 9,99€ al mes puedes generar facturas, nóminas y albaranes en
+              segundos usando los datos de tus clientes, proveedores y empleados solamente usando un
+              chat de WhatsApp.
+            </p>
+            <a class="home-more-info" href="#">Más información</a>
+          </div>
+          <div class="home-video-slot">
+            <video class="home-media" autoplay muted playsinline controls preload="metadata">
+              <source src="facturas.mp4" type="video/mp4" />
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band">
+        <div class="container home-split home-split-video home-split-reverse reveal">
+          <div class="home-copy">
+            <p class="section-label">Lectura automática</p>
+            <h2>Extracción inteligente de datos.</h2>
+            <p>
+              Nuestra inteligencia artificial extrae los datos tanto de tus facturas como de tus
+              nóminas y crea o asocia automáticamente un cliente, proveedor o un trabajador en la base
+              de datos de tu empresa.
+            </p>
+          </div>
+          <div class="home-video-slot">
+            <img
+              class="home-media"
+              src="extraccion-inteligente-de-datos.jpg"
+              alt="Extracción inteligente de datos"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band home-band-purple">
+        <div class="container home-split home-split-video reveal">
+          <div class="home-copy">
+            <p class="section-label">Organización automática</p>
+            <h2>Todo queda asociado a tu empresa.</h2>
+            <p>
+              Nuestra IA extrae de cada factura la base imponible, el IVA, el total, la fecha, el
+              proveedor, el cliente y el concepto, organizando toda la información automáticamente en
+              la base de datos de tu empresa.
+            </p>
+          </div>
+          <div class="home-video-slot">
+            <img
+              class="home-media"
+              src="organizacion-automatica.jpg"
+              alt="Organización automática"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band">
+        <div class="container home-split home-split-video home-split-reverse reveal">
+          <div class="home-copy">
+            <p class="section-label">Automatización de asientos contables</p>
+            <h2>Contabilidad en segundos</h2>
+            <p>
+              Nuestra tecnología analiza cada documento financiero y transforma la información en
+              asientos contables precisos. La IA identifica el tipo de operación, asigna las cuentas
+              correctas y genera el asiento completo de forma automática pudiendo generar carpetas
+              repletas de facturas a la vez, reduciendo errores humanos y ahorrando entre un 60% y
+              80% de tu tiempo.
+            </p>
+          </div>
+          <div class="home-video-slot">
+            <img
+              class="home-media"
+              src="asientos-contables-automaticos.png"
+              alt="Asientos contables automáticos"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band home-band-purple home-ready">
+        <div class="container reveal">
+          <div class="home-centered">
+            <p class="section-label">Todo listo para tu empresa</p>
+            <h2>Exporta tus registros contables cuando los necesites.</h2>
+            <p>
+              Nuestra IA genera automáticamente los asientos contables y los exporta en formatos Excel
+              o XML, para que puedas descargar y disponer de toda la información de tus registros
+              contables cuando lo necesites.
+            </p>
+            <a class="btn btn-primary" href="pricing.html">Empieza ahora</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band home-testimonials">
+        <div class="container reveal">
+          <h2 class="section-title section-title-small">Testimonios</h2>
+          <div class="home-card-grid">
+            <article class="home-card">
+              <div class="testimonial-rating" aria-label="Valoración: 4 de 5 estrellas">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span class="is-empty">&#9733;</span>
+              </div>
+              <p>
+                “Al principio tenía dudas porque nunca había usado un programa con IA, pero me ha
+                sorprendido para bien. Subo las facturas y prácticamente se organiza todo solo.”
+              </p>
+              <div class="testimonial-author">
+                <img
+                  src="https://i.pravatar.cc/96?img=47"
+                  alt="María González"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div>
+                  <strong>María González</strong>
+                  <span>Autónoma · diseño gráfico</span>
+                </div>
+              </div>
+            </article>
+            <article class="home-card">
+              <div class="testimonial-rating" aria-label="Valoración: 5 de 5 estrellas">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+              </div>
+              <p>
+                “Reviso en lugar de hacerlo todo desde cero y eso se nota mucho en el día a día.”
+              </p>
+              <div class="testimonial-author">
+                <img
+                  src="https://i.pravatar.cc/96?img=32"
+                  alt="Lucía Fernández"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div>
+                  <strong>Lucía Fernández</strong>
+                  <span>Asesora contable</span>
+                </div>
+              </div>
+            </article>
+            <article class="home-card">
+              <div class="testimonial-rating" aria-label="Valoración: 5 de 5 estrellas">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+              </div>
+              <p>
+                “Antes teníamos todo en carpetas y Excel. Con Smartbook AI está todo ordenado y
+                claro.”
+              </p>
+              <div class="testimonial-author">
+                <img
+                  src="https://i.pravatar.cc/96?img=12"
+                  alt="Javier López"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div>
+                  <strong>Javier López</strong>
+                  <span>Gerente de pyme</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band home-blog" id="blog">
+        <div class="container reveal">
+          <h2 class="section-title section-title-small">Blog</h2>
+          <div class="home-card-grid">
+            <article class="home-card home-blog-card">
+              <img
+                class="home-blog-image"
+                src="bloganalisis.jpg"
+                alt="Análisis de marketing con inteligencia artificial"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="home-blog-content">
+                <h3>Análisis de marketing con inteligencia artificial</h3>
+                <p>
+                  Cómo la IA transforma el marketing digital mediante automatización, análisis de datos
+                  y personalización.
+                </p>
+                <a href="blog-analisis.html">Leer más</a>
+              </div>
+            </article>
+            <article class="home-card home-blog-card">
+              <img
+                class="home-blog-image"
+                src="blogpymes.jpg"
+                alt="Automatización contable para pymes"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="home-blog-content">
+                <h3>¿Por qué las pymes necesitan automatizar su contabilidad?</h3>
+                <p>
+                  La contabilidad manual consume tiempo, aumenta errores y complica la gestión diaria.
+                </p>
+                <a
+                  href="https://comercial6715.wixsite.com/smartbook-ai/post/the-importance-of-sustainable-living-in-today-s-world-1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Leer más
+                </a>
+              </div>
+            </article>
+            <article class="home-card home-blog-card">
+              <img
+                class="home-blog-image"
+                src="blogrevolucion.jpg"
+                alt="Inteligencia artificial en el mundo contable"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="home-blog-content">
+                <h3>Cómo la inteligencia artificial está revolucionando el mundo contable</h3>
+                <p>
+                  Los sistemas ya pueden leer facturas, clasificar información y generar registros de
+                  forma automática.
+                </p>
+                <a
+                  href="https://comercial6715.wixsite.com/smartbook-ai/post/the-art-of-effective-communication-in-everyday-life"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Leer más
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band home-about-cta">
+        <div class="container home-split reveal">
+          <div class="home-copy">
+            <p class="section-label">Acerca de nosotros</p>
+            <h2>SmartBook AI es una forma sencilla de gestionar tu contabilidad.</h2>
+            <p>
+              Nuestro enfoque innovador y personalizable se adapta a las necesidades financieras de
+              autónomos, pequeñas empresas y gestorías.
+            </p>
+            <a class="btn btn-primary" href="about.html">Conócenos</a>
+          </div>
+          <div class="home-about-image-slot">
+            <img
+              class="home-about-image"
+              src="persona.jpg"
+              alt="Persona usando SmartBook AI"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a href="#" class="logo" aria-label="SmartBook AI">
+          <img src="logo.png" alt="SmartBook AI" class="logo-img logo-footer" height="28" />
+        </a>
+        <nav aria-label="Enlaces footer">
+          <a href="privacy-policy.html">Política de Privacidad</a>
+          <a href="terms-and-conditions.html">Términos y Condiciones</a>
+          <a href="cookies.html">Cookies</a>
+          <a href="dpa.html">DPA</a>
+          <a href="legal-notice.html">Aviso legal</a>
+        </nav>
+        <p>© 2025 SmartBook AI</p>
+      </div>
+    </footer>
+
+    <a
+      class="whatsapp-float"
+      href="https://wa.me/34620762842"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Hablar con SmartBook AI por WhatsApp"
+    >
+      <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path
+          d="M16.04 3.2A12.74 12.74 0 0 0 5.1 22.47L3.2 29l6.7-1.76A12.75 12.75 0 1 0 16.04 3.2Zm0 23.33a10.54 10.54 0 0 1-5.37-1.47l-.38-.23-3.98 1.04 1.06-3.88-.25-.4a10.5 10.5 0 1 1 8.92 4.94Zm5.78-7.88c-.32-.16-1.88-.93-2.17-1.03-.29-.11-.5-.16-.71.16-.21.32-.81 1.03-1 1.24-.18.21-.37.24-.69.08-.32-.16-1.34-.49-2.55-1.57a9.53 9.53 0 0 1-1.76-2.19c-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.18.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.53-.71-.54h-.61c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65s1.14 3.07 1.3 3.28c.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.46.21 2.01.13.61-.09 1.88-.77 2.14-1.51.26-.74.26-1.38.18-1.51-.08-.13-.29-.21-.61-.37Z"
+        />
+      </svg>
+    </a>
+
+    <script src="main.js?v=20260427-3" defer></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
