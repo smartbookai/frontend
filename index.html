@@ -86,10 +86,19 @@
             <a class="home-more-info" href="#">Más información</a>
           </div>
           <div class="home-video-slot">
-            <video class="home-media" autoplay muted playsinline controls preload="metadata">
+            <video
+              class="home-media"
+              autoplay
+              muted
+              playsinline
+              preload="metadata"
+              data-locked-video
+              tabindex="-1"
+            >
               <source src="facturas.mp4" type="video/mp4" />
               Tu navegador no soporta la reproducción de video.
             </video>
+            <span class="home-video-guard" aria-hidden="true"></span>
           </div>
         </div>
       </section>

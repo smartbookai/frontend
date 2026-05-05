@@ -23,6 +23,8 @@
   const revealElements = document.querySelectorAll(".reveal");
   const heroStage = document.getElementById("hero-stage");
   const contactForm = document.querySelector(".contact-form");
+  const shareLinks = document.querySelectorAll("[data-share-network]");
+  const lockedVideos = document.querySelectorAll("[data-locked-video]");
 
   const TOP_THRESHOLD = 4;
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -196,6 +198,40 @@
     });
   };
 
+  const hydrateShareLinks = () => {
+    if (shareLinks.length === 0) return;
+
+    const articleUrl = encodeURIComponent(window.location.href);
+    const articleTitle = encodeURIComponent(document.title.replace(/\s*\|\s*SmartBook AI\s*$/, ""));
+
+    shareLinks.forEach((link) => {
+      const network = link.getAttribute("data-share-network");
+      if (network === "facebook") {
+        link.href = `https://www.facebook.com/sharer/sharer.php?u=${articleUrl}`;
+      }
+      if (network === "x") {
+        link.href = `https://twitter.com/intent/tweet?url=${articleUrl}&text=${articleTitle}`;
+      }
+    });
+  };
+
+  const lockVideos = () => {
+    if (lockedVideos.length === 0) return;
+
+    lockedVideos.forEach((video) => {
+      video.controls = false;
+      video.removeAttribute("controls");
+      video.setAttribute("disablepictureinpicture", "");
+      video.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback");
+
+      video.addEventListener("contextmenu", (event) => event.preventDefault());
+      video.addEventListener("pause", () => {
+        if (video.ended) return;
+        video.play().catch(() => {});
+      });
+    });
+  };
+
   navItems.forEach((item) => {
     item.addEventListener("mouseenter", () => {
       if (topOnlyNavPill && !isAtTop) return;
@@ -297,5 +333,7 @@
   setNavbarState();
   paintHeadmarkPurple();
   updateHeroScrollState();
+  hydrateShareLinks();
+  lockVideos();
   hardenBlankTargetLinks();
 })();

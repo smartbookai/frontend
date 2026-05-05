@@ -713,6 +713,7 @@ h1 {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
 }
 
 .home-split-reverse .home-copy {
@@ -790,6 +791,19 @@ h1 {
 .home-split-video .home-media {
   width: clamp(820px, 62vw, 1120px);
   height: auto;
+}
+
+.home-video-guard {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: default;
+}
+
+.home-video-slot video::-webkit-media-controls,
+.home-video-slot video::-webkit-media-controls-enclosure,
+.home-video-slot video::-webkit-media-controls-panel {
+  display: none !important;
 }
 
 .mock-window,
