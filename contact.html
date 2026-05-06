@@ -10,7 +10,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.pravatar.cc; font-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.pravatar.cc; font-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; frame-src 'none'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -76,19 +76,29 @@
             </article>
           </div>
 
-          <form class="contact-form reveal" action="#" method="post">
+          <form class="contact-form reveal" action="https://formsubmit.co/info@smartbook-ai.com" method="post">
             <h2>Enviar consulta</h2>
             <p class="sub">Campos obligatorios marcados con *</p>
+            <input type="hidden" name="_subject" value="Nueva consulta desde SmartBook AI" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
 
             <div class="form-grid">
               <div class="field">
                 <label for="name">Nombre *</label>
-                <input id="name" name="Nombre" type="text" maxlength="120" required />
+                <input id="name" name="Nombre" type="text" autocomplete="name" maxlength="120" required />
               </div>
 
               <div class="field">
                 <label for="email">Email *</label>
-                <input id="email" name="Email" type="email" maxlength="160" required />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  maxlength="160"
+                  required
+                />
               </div>
 
               <div class="field">

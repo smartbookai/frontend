@@ -25,6 +25,7 @@
   const contactForm = document.querySelector(".contact-form");
   const shareLinks = document.querySelectorAll("[data-share-network]");
   const lockedVideos = document.querySelectorAll("[data-locked-video]");
+  const revealPlaybackVideos = document.querySelectorAll("[data-play-after-reveal]");
 
   const TOP_THRESHOLD = 4;
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -175,6 +176,40 @@
     });
   };
 
+  const playRevealVideos = (element) => {
+    const videos = element.querySelectorAll("[data-play-after-reveal]");
+    if (videos.length === 0) return;
+
+    videos.forEach((video) => {
+      video.dataset.revealReady = "true";
+      video.play().catch(() => {});
+    });
+  };
+
+  const playRevealVideosAfterTransition = (element) => {
+    const videos = element.querySelectorAll("[data-play-after-reveal]");
+    if (videos.length === 0 || element.dataset.revealPlaybackStarted === "true") return;
+
+    element.dataset.revealPlaybackStarted = "true";
+
+    if (element.classList.contains("no-transition")) {
+      playRevealVideos(element);
+      return;
+    }
+
+    const startPlayback = () => playRevealVideos(element);
+    const fallbackId = window.setTimeout(startPlayback, 900);
+
+    const handleTransitionEnd = (event) => {
+      if (event.target !== element || event.propertyName !== "opacity") return;
+      window.clearTimeout(fallbackId);
+      element.removeEventListener("transitionend", handleTransitionEnd);
+      startPlayback();
+    };
+
+    element.addEventListener("transitionend", handleTransitionEnd);
+  };
+
   const sanitizeForMailto = (value, maxLength) => {
     const normalized = String(value ?? "")
       .replace(/[\u0000-\u001f\u007f]+/g, " ")
@@ -227,8 +262,19 @@
       video.addEventListener("contextmenu", (event) => event.preventDefault());
       video.addEventListener("pause", () => {
         if (video.ended) return;
+        if (video.matches("[data-play-after-reveal]") && video.dataset.revealReady !== "true") return;
         video.play().catch(() => {});
       });
+    });
+  };
+
+  const prepareRevealPlaybackVideos = () => {
+    if (revealPlaybackVideos.length === 0) return;
+
+    revealPlaybackVideos.forEach((video) => {
+      video.dataset.revealReady = "false";
+      video.removeAttribute("autoplay");
+      video.pause();
     });
   };
 
@@ -250,6 +296,8 @@
     });
   }
 
+  prepareRevealPlaybackVideos();
+
   if (revealElements.length > 0 && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -258,8 +306,10 @@
             const alreadyShown = entry.target.classList.contains("has-appeared");
             if (scrollDirection === "down" && !alreadyShown) {
               entry.target.classList.add("is-visible");
+              playRevealVideosAfterTransition(entry.target);
             } else {
               showWithoutFade(entry.target);
+              playRevealVideos(entry.target);
             }
             entry.target.classList.add("has-appeared");
           } else if (!entry.target.classList.contains("has-appeared")) {
@@ -276,15 +326,20 @@
       observer.observe(el);
     });
   } else if (revealElements.length > 0) {
-    revealElements.forEach((el) => el.classList.add("is-visible"));
+    revealElements.forEach((el) => {
+      el.classList.add("is-visible");
+      playRevealVideos(el);
+    });
   }
 
   if (contactForm) {
     contactForm.addEventListener("submit", (event) => {
+      if (contactForm.action.startsWith("https://formsubmit.co/")) return;
+
       event.preventDefault();
       const formData = new FormData(contactForm);
       const name = sanitizeForMailto(formData.get("Nombre"), 120);
-      const email = sanitizeForMailto(formData.get("Email"), 160);
+      const email = sanitizeForMailto(formData.get("Email") || formData.get("email"), 160);
       const company = sanitizeForMailto(formData.get("Empresa"), 120);
       const message = sanitizeForMailto(formData.get("Mensaje"), 2000);
       if (!name || !email || !message || !EMAIL_REGEX.test(email)) {
