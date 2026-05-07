@@ -19,6 +19,212 @@
     <link rel="dns-prefetch" href="//i.pravatar.cc" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="styles.css?v=20260501-1" />
+    <style>
+      :root {
+        --fixed-home-width: max(100vw, 1366px);
+      }
+
+      html,
+      body {
+        min-width: 1366px;
+      }
+
+      .navbar {
+        min-width: 1366px;
+      }
+
+      .container {
+        width: min(1120px, calc(var(--fixed-home-width) * 0.92));
+      }
+
+      .hero-overlay-panel {
+        width: min(760px, calc(var(--fixed-home-width) * 0.94));
+        padding: clamp(24px, calc(var(--fixed-home-width) * 0.04), 36px);
+      }
+
+      h1 {
+        font-size: clamp(2.5rem, calc(var(--fixed-home-width) * 0.06), 3.75rem);
+      }
+
+      .section-title {
+        font-size: clamp(2rem, calc(var(--fixed-home-width) * 0.037), 2.25rem);
+      }
+
+      .section-title-small {
+        font-size: clamp(1.6rem, calc(var(--fixed-home-width) * 0.03), 1.75rem);
+      }
+
+      .home-band {
+        padding: clamp(78px, calc(var(--fixed-home-width) * 0.09), 132px) 0;
+      }
+
+      .home-split,
+      .home-split-reverse {
+        grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+        gap: clamp(56px, calc(var(--fixed-home-width) * 0.07), 112px);
+      }
+
+      .home-split-video {
+        grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+        width: min(1500px, calc(var(--fixed-home-width) * 0.94));
+        gap: clamp(48px, calc(var(--fixed-home-width) * 0.06), 96px);
+      }
+
+      .home-split-reverse {
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      }
+
+      .home-split-reverse .home-copy {
+        order: 2;
+      }
+
+      .home-video-slot {
+        min-height: clamp(520px, calc(var(--fixed-home-width) * 0.58), 760px);
+        overflow: hidden;
+      }
+
+      .home-media {
+        height: clamp(520px, calc(var(--fixed-home-width) * 0.58), 760px);
+      }
+
+      .home-split-video .home-media {
+        width: clamp(820px, calc(var(--fixed-home-width) * 0.62), 1120px);
+        height: auto;
+      }
+
+      .home-split-video .home-media-large {
+        width: clamp(1320px, calc(var(--fixed-home-width) * 0.96), 1760px);
+      }
+
+      .home-split-video-large {
+        grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1.9fr);
+        gap: clamp(18px, calc(var(--fixed-home-width) * 0.024), 42px);
+        width: min(1960px, calc(var(--fixed-home-width) * 0.99));
+      }
+
+      .home-split-video-large:not(.home-split-reverse) {
+        grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1.9fr);
+      }
+
+      .home-split-video-large.home-split-reverse {
+        grid-template-columns: minmax(0, 1.9fr) minmax(260px, 0.45fr);
+      }
+
+      .home-split-video-large .home-video-slot-large {
+        min-height: clamp(680px, calc(var(--fixed-home-width) * 0.76), 980px);
+        overflow: visible;
+      }
+
+      .home-split-video-large .home-media-large {
+        width: clamp(1900px, calc(var(--fixed-home-width) * 1.32), 2600px);
+        transform: none;
+      }
+
+      .home-copy h2,
+      .home-centered h2 {
+        font-size: clamp(2rem, calc(var(--fixed-home-width) * 0.04), 3.4rem);
+      }
+
+      .home-copy p,
+      .home-centered p {
+        font-size: clamp(1rem, calc(var(--fixed-home-width) * 0.015), 1.15rem);
+      }
+
+      .home-card-grid,
+      .home-testimonials .home-card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .home-testimonials .container {
+        width: min(1640px, calc(var(--fixed-home-width) * 0.98));
+      }
+
+      .home-testimonials .home-card-grid {
+        gap: clamp(24px, calc(var(--fixed-home-width) * 0.026), 40px);
+      }
+
+      .home-testimonials .home-card {
+        padding: clamp(42px, calc(var(--fixed-home-width) * 0.04), 58px);
+      }
+
+      .home-blog .container {
+        width: min(1500px, calc(var(--fixed-home-width) * 0.96));
+      }
+
+      .home-blog .home-card-grid {
+        gap: clamp(30px, calc(var(--fixed-home-width) * 0.04), 56px);
+      }
+
+      .home-blog-content {
+        padding: clamp(24px, calc(var(--fixed-home-width) * 0.026), 34px);
+      }
+
+      .home-blog-card h3 {
+        font-size: clamp(1.15rem, calc(var(--fixed-home-width) * 0.016), 1.35rem);
+      }
+
+      .home-blog-community {
+        margin-top: clamp(30px, calc(var(--fixed-home-width) * 0.04), 56px);
+      }
+
+      .footer-inner {
+        grid-template-columns: auto 1fr auto;
+        text-align: left;
+        justify-items: stretch;
+      }
+
+      .nav-inner {
+        flex-wrap: nowrap;
+        gap: 24px;
+      }
+
+      .nav-links {
+        width: auto;
+        justify-content: flex-start;
+        order: 0;
+        gap: 8px;
+        padding-top: 0;
+        margin-right: 6px;
+      }
+
+      .nav-actions {
+        margin-left: 0;
+        gap: 10px;
+      }
+
+      .hero {
+        height: 210vh;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+      }
+
+      .btn {
+        padding: 8px 20px;
+      }
+
+      .btn-hero {
+        height: 48px;
+        padding: 0 32px;
+      }
+
+      .whatsapp-community-inner {
+        padding: 30px;
+      }
+
+      .whatsapp-float {
+        right: 56px;
+        bottom: 56px;
+        width: 68px;
+        height: 68px;
+      }
+
+      .whatsapp-float svg {
+        width: 38px;
+        height: 38px;
+      }
+    </style>
   </head>
   <body>
     <header class="navbar" id="navbar">
@@ -352,4 +558,3 @@
     <script src="main.js?v=20260427-3" defer></script>
   </body>
 </html>
-
