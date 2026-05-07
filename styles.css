@@ -43,6 +43,13 @@
   --border-subtle: rgba(93, 48, 133, 0.22);
   --radius: 8px;
   --radius-card: 12px;
+  --desktop-reference: 2560;
+  --container-max: 70rem;
+  --home-wide-max: 93.75rem;
+  --home-xl-max: 122.5rem;
+  --testimonials-max: 102.5rem;
+  --blog-max: 93.75rem;
+  --hero-panel-max: 47.5rem;
 }
 
 *,
@@ -70,7 +77,7 @@ a {
 }
 
 .container {
-  width: min(1120px, 92vw);
+  width: min(var(--container-max), 92vw);
   margin: 0 auto;
 }
 
@@ -1368,6 +1375,250 @@ h1 {
 
 }
 
+/* Resolution scaling for the home page.
+   The desktop design was composed at 2560px wide; below that, these rules
+   keep the same proportions instead of letting 2K-sized clamps stay at max. */
+html,
+body {
+  min-width: 0 !important;
+}
+
+body {
+  zoom: 1 !important;
+}
+
+.navbar {
+  min-width: 0 !important;
+}
+
+:root {
+  --fixed-home-width: 100vw !important;
+}
+
+.container {
+  width: min(var(--container-max), 92vw) !important;
+}
+
+.home-testimonials .container {
+  width: min(var(--testimonials-max), 98vw) !important;
+}
+
+.home-blog .container {
+  width: min(var(--blog-max), 96vw) !important;
+}
+
+.hero-overlay-panel {
+  width: min(var(--hero-panel-max), 94vw) !important;
+  padding: clamp(1.5rem, 1.406vw, 2.25rem) !important;
+}
+
+h1 {
+  font-size: clamp(2rem, 2.344vw, 3.75rem) !important;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 1.406vw, 2.25rem) !important;
+}
+
+.section-title-small {
+  font-size: clamp(1.25rem, 1.094vw, 1.75rem) !important;
+}
+
+.home-band {
+  padding: clamp(4.2rem, 5.156vw, 8.25rem) 0 !important;
+}
+
+.home-split,
+.home-split-reverse {
+  gap: clamp(1.875rem, 4.375vw, 7rem) !important;
+}
+
+.home-split-video {
+  width: min(var(--home-wide-max), 94vw) !important;
+  gap: clamp(1.75rem, 3.75vw, 6rem) !important;
+}
+
+.home-split-video-large {
+  width: min(var(--home-xl-max), 99vw) !important;
+  gap: clamp(1rem, 1.641vw, 2.625rem) !important;
+}
+
+.home-video-slot {
+  min-height: clamp(27.75rem, 29.688vw, 47.5rem) !important;
+}
+
+.home-media {
+  height: clamp(27.75rem, 29.688vw, 47.5rem) !important;
+}
+
+.home-split-video .home-media {
+  width: clamp(27.25rem, 43.75vw, 70rem) !important;
+  height: auto !important;
+}
+
+.home-split-video .home-media-large {
+  width: clamp(43.75rem, 68.75vw, 110rem) !important;
+}
+
+.home-split-video-large .home-video-slot-large {
+  min-height: clamp(32.5rem, 38.281vw, 61.25rem) !important;
+}
+
+.home-split-video-large .home-media-large {
+  width: clamp(57.5rem, 101.563vw, 162.5rem) !important;
+}
+
+.home-copy h2,
+.home-centered h2 {
+  font-size: clamp(1.85rem, 2.125vw, 3.4rem) !important;
+}
+
+.home-copy p,
+.home-centered p {
+  font-size: clamp(0.98rem, 0.719vw, 1.15rem) !important;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 0.703vw, 1.125rem) !important;
+}
+
+.btn-hero {
+  height: clamp(2.5rem, 1.875vw, 3rem) !important;
+  padding: 0 clamp(1.35rem, 1.25vw, 2rem) !important;
+}
+
+.whatsapp-float {
+  right: clamp(2rem, 2.188vw, 3.5rem) !important;
+  bottom: clamp(2rem, 2.188vw, 3.5rem) !important;
+  width: clamp(3.5rem, 2.656vw, 4.25rem) !important;
+  height: clamp(3.5rem, 2.656vw, 4.25rem) !important;
+}
+
+.whatsapp-float svg {
+  width: clamp(2rem, 1.484vw, 2.375rem) !important;
+  height: clamp(2rem, 1.484vw, 2.375rem) !important;
+}
+
+@media (max-width: 1920px) {
+  :root {
+    --container-max: 52.5rem;
+    --home-wide-max: 70.3125rem;
+    --home-xl-max: 91.875rem;
+    --testimonials-max: 76.875rem;
+    --blog-max: 70.3125rem;
+    --hero-panel-max: 35.625rem;
+  }
+
+  .nav-inner {
+    gap: 1.125rem !important;
+    padding: 0.65rem 0 !important;
+  }
+
+  .logo-img {
+    max-height: 1.875rem;
+  }
+
+  .nav-links a,
+  .btn {
+    font-size: 0.875rem;
+  }
+
+  .hero {
+    height: 200vh !important;
+  }
+
+  .home-split-video-large .home-video-slot-large {
+    overflow: hidden !important;
+  }
+}
+
+@media (max-width: 1440px) {
+  :root {
+    --container-max: 39.375rem;
+    --home-wide-max: 52.75rem;
+    --home-xl-max: 68.875rem;
+    --testimonials-max: 57.625rem;
+    --blog-max: 52.75rem;
+    --hero-panel-max: 26.75rem;
+  }
+
+  .nav-inner {
+    gap: 0.75rem !important;
+  }
+
+  .nav-links {
+    gap: 0.25rem !important;
+  }
+
+  .nav-links a {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.8125rem;
+  }
+
+  .nav-actions {
+    gap: 0.45rem !important;
+  }
+
+  .btn {
+    padding: 0.45rem 0.9rem !important;
+    font-size: 0.8125rem;
+  }
+
+  .hero-overlay-panel {
+    border-radius: 0.75rem;
+  }
+
+  .kicker,
+  .hero-bullets {
+    font-size: 0.75rem;
+  }
+
+  .home-split-video-large:not(.home-split-reverse) {
+    grid-template-columns: minmax(14rem, 0.55fr) minmax(0, 1.45fr) !important;
+  }
+
+  .home-split-video-large.home-split-reverse {
+    grid-template-columns: minmax(0, 1.45fr) minmax(14rem, 0.55fr) !important;
+  }
+
+  .home-copy h2,
+  .home-centered h2 {
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 1366px) {
+  :root {
+    --container-max: 37.375rem;
+    --home-wide-max: 50rem;
+    --home-xl-max: 65.375rem;
+    --testimonials-max: 54.75rem;
+    --blog-max: 50rem;
+    --hero-panel-max: 25.375rem;
+  }
+
+  .container {
+    width: min(var(--container-max), 94vw) !important;
+  }
+
+  .hero {
+    height: 190vh !important;
+  }
+
+  .hero-overlay-panel {
+    width: min(var(--hero-panel-max), 88vw) !important;
+  }
+
+  .home-split-video,
+  .home-split-video-large {
+    width: min(var(--home-xl-max), 96vw) !important;
+  }
+
+  .home-split-video-large .home-media-large {
+    transform: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -2330,4 +2581,3 @@ h1 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
