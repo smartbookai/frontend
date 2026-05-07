@@ -10,7 +10,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.pravatar.cc; font-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests"
+      content="default-src 'self'; script-src 'self' 'nonce-resolutionfit123'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.pravatar.cc; font-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests"
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -22,11 +22,20 @@
     <style>
       :root {
         --fixed-home-width: max(100vw, 1366px);
+        --screen-fit-scale: 1;
       }
 
       html,
       body {
         min-width: 1366px;
+      }
+
+      body {
+        zoom: var(--screen-fit-scale);
+      }
+
+      html.is-screen-fit {
+        overflow-x: hidden;
       }
 
       .navbar {
@@ -225,6 +234,25 @@
         height: 38px;
       }
     </style>
+    <script nonce="resolutionfit123">
+      (() => {
+        "use strict";
+
+        const BASE_WIDTH = 1366;
+
+        const fitResolution = () => {
+          const viewportWidth = window.visualViewport?.width || window.innerWidth || BASE_WIDTH;
+          const scale = viewportWidth < BASE_WIDTH ? viewportWidth / BASE_WIDTH : 1;
+          document.documentElement.style.setProperty("--screen-fit-scale", scale.toFixed(4));
+          document.documentElement.classList.toggle("is-screen-fit", scale < 0.999);
+        };
+
+        fitResolution();
+        window.addEventListener("DOMContentLoaded", fitResolution, { once: true });
+        window.addEventListener("resize", fitResolution, { passive: true });
+        window.visualViewport?.addEventListener("resize", fitResolution, { passive: true });
+      })();
+    </script>
   </head>
   <body>
     <header class="navbar" id="navbar">
