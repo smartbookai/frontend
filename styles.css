@@ -50,6 +50,20 @@
   --testimonials-max: 102.5rem;
   --blog-max: 93.75rem;
   --hero-panel-max: 47.5rem;
+  --nav-gap: 1.5rem;
+  --nav-padding-y: 0.875rem;
+  --nav-logo-height: 2.5rem;
+  --nav-headmark-size: 2.125rem;
+  --nav-links-gap: 0.5rem;
+  --nav-links-margin: 0.375rem;
+  --nav-link-padding-y: 0.5rem;
+  --nav-link-padding-x: 0.875rem;
+  --nav-font-size: 0.9375rem;
+  --nav-actions-gap: 0.625rem;
+  --nav-btn-padding-y: 0.5rem;
+  --nav-btn-padding-x: 1.25rem;
+  --nav-btn-min-height: 2.375rem;
+  --nav-width-max: 70rem;
 }
 
 *,
@@ -1391,6 +1405,48 @@ body {
   min-width: 0 !important;
 }
 
+.nav-inner {
+  width: min(var(--nav-width-max), 92vw) !important;
+  flex-wrap: nowrap !important;
+  gap: var(--nav-gap) !important;
+  padding: var(--nav-padding-y) 0 !important;
+}
+
+.nav-headmark,
+.nav-headmark-canvas {
+  width: var(--nav-headmark-size) !important;
+  height: var(--nav-headmark-size) !important;
+}
+
+.logo-img {
+  max-height: var(--nav-logo-height) !important;
+}
+
+.nav-links {
+  flex-wrap: nowrap !important;
+  gap: var(--nav-links-gap) !important;
+  margin-right: var(--nav-links-margin) !important;
+}
+
+.nav-links a {
+  padding: var(--nav-link-padding-y) var(--nav-link-padding-x) !important;
+  font-size: var(--nav-font-size) !important;
+}
+
+.nav-actions {
+  flex-wrap: nowrap !important;
+  gap: var(--nav-actions-gap) !important;
+}
+
+.nav-actions .btn {
+  min-height: var(--nav-btn-min-height) !important;
+}
+
+.btn {
+  padding: var(--nav-btn-padding-y) var(--nav-btn-padding-x) !important;
+  font-size: var(--nav-font-size) !important;
+}
+
 :root {
   --fixed-home-width: 100vw !important;
 }
@@ -1507,20 +1563,20 @@ h1 {
     --testimonials-max: 76.875rem;
     --blog-max: 70.3125rem;
     --hero-panel-max: 35.625rem;
-  }
-
-  .nav-inner {
-    gap: 1.125rem !important;
-    padding: 0.65rem 0 !important;
-  }
-
-  .logo-img {
-    max-height: 1.875rem;
-  }
-
-  .nav-links a,
-  .btn {
-    font-size: 0.875rem;
+    --nav-gap: 1.125rem;
+    --nav-padding-y: 0.65625rem;
+    --nav-logo-height: 1.875rem;
+    --nav-headmark-size: 1.625rem;
+    --nav-links-gap: 0.375rem;
+    --nav-links-margin: 0.25rem;
+    --nav-link-padding-y: 0.375rem;
+    --nav-link-padding-x: 0.65625rem;
+    --nav-font-size: 0.875rem;
+    --nav-actions-gap: 0.46875rem;
+    --nav-btn-padding-y: 0.375rem;
+    --nav-btn-padding-x: 0.9375rem;
+    --nav-btn-min-height: 1.875rem;
+    --nav-width-max: 52.5rem;
   }
 
   .hero {
@@ -1540,28 +1596,20 @@ h1 {
     --testimonials-max: 57.625rem;
     --blog-max: 52.75rem;
     --hero-panel-max: 26.75rem;
-  }
-
-  .nav-inner {
-    gap: 0.75rem !important;
-  }
-
-  .nav-links {
-    gap: 0.25rem !important;
-  }
-
-  .nav-links a {
-    padding: 0.45rem 0.7rem;
-    font-size: 0.8125rem;
-  }
-
-  .nav-actions {
-    gap: 0.45rem !important;
-  }
-
-  .btn {
-    padding: 0.45rem 0.9rem !important;
-    font-size: 0.8125rem;
+    --nav-gap: 0.75rem;
+    --nav-padding-y: 0.5rem;
+    --nav-logo-height: 1.5rem;
+    --nav-headmark-size: 1.375rem;
+    --nav-links-gap: 0.25rem;
+    --nav-links-margin: 0.125rem;
+    --nav-link-padding-y: 0.34rem;
+    --nav-link-padding-x: 0.5rem;
+    --nav-font-size: 0.8125rem;
+    --nav-actions-gap: 0.375rem;
+    --nav-btn-padding-y: 0.34rem;
+    --nav-btn-padding-x: 0.625rem;
+    --nav-btn-min-height: 1.75rem;
+    --nav-width-max: 52rem;
   }
 
   .hero-overlay-panel {
@@ -1595,6 +1643,20 @@ h1 {
     --testimonials-max: 54.75rem;
     --blog-max: 50rem;
     --hero-panel-max: 25.375rem;
+    --nav-gap: 0.625rem;
+    --nav-padding-y: 0.4375rem;
+    --nav-logo-height: 1.375rem;
+    --nav-headmark-size: 1.25rem;
+    --nav-links-gap: 0.1875rem;
+    --nav-links-margin: 0;
+    --nav-link-padding-y: 0.3rem;
+    --nav-link-padding-x: 0.4375rem;
+    --nav-font-size: 0.75rem;
+    --nav-actions-gap: 0.3125rem;
+    --nav-btn-padding-y: 0.3rem;
+    --nav-btn-padding-x: 0.5rem;
+    --nav-btn-min-height: 1.625rem;
+    --nav-width-max: 60rem;
   }
 
   .container {
@@ -1616,6 +1678,36 @@ h1 {
 
   .home-split-video-large .home-media-large {
     transform: none !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .nav-inner {
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
+  }
+
+  .nav-links {
+    width: 100% !important;
+    justify-content: center !important;
+    order: 3 !important;
+    gap: 0.5rem !important;
+    padding-top: 0.125rem !important;
+    margin-right: 0 !important;
+  }
+
+  .nav-actions {
+    margin-left: auto !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-actions {
+    gap: 0.5rem !important;
+  }
+
+  .btn {
+    padding: 0.5rem 0.875rem !important;
   }
 }
 
