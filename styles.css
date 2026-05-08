@@ -2402,17 +2402,19 @@ h1 {
   flex: 1;
   padding: clamp(4rem, 3.75vw, 4.5rem) 0 clamp(3.5rem, 3.333vw, 4rem);
   background: var(--bg-main);
+  overflow-x: auto;
 }
 
 .pricing-section .container {
-  width: min(var(--pricing-max), 96vw);
+  width: min(var(--pricing-max), 98vw);
+  min-width: min(var(--pricing-max), 90rem);
 }
 
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(0.75rem, 0.833vw, 1.25rem);
-  align-items: start;
+  align-items: stretch;
 }
 
 .plan-card {
@@ -2420,8 +2422,16 @@ h1 {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
   min-width: 0;
-  padding: clamp(1.25rem, 1.563vw, 2rem) clamp(0.875rem, 1.042vw, 1.375rem) clamp(1.25rem, 1.458vw, 1.75rem);
+  min-height: clamp(27rem, 32vw, 34rem);
+  padding: clamp(1.375rem, 1.563vw, 2rem) clamp(1rem, 1.146vw, 1.5rem) clamp(1.375rem, 1.458vw, 1.75rem);
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -2512,6 +2522,7 @@ h1 {
   font-size: clamp(0.75rem, 0.677vw, 0.8125rem);
   color: var(--text-secondary);
   margin: 0 0 4px;
+  padding-right: clamp(0.375rem, 0.521vw, 0.75rem);
 }
 
 .plan-card.is-featured .plan-period {
@@ -2554,10 +2565,17 @@ h1 {
 }
 
 .plan-volume {
-  font-size: clamp(0.75rem, 0.677vw, 0.875rem);
+  box-sizing: border-box;
+  padding-right: clamp(0.375rem, 0.521vw, 0.75rem);
+  font-size: clamp(0.66rem, 0.625vw, 0.875rem);
   color: var(--text-secondary);
   line-height: 1.5;
   margin: 0 0 8px;
+  white-space: nowrap;
+}
+
+.plan-card:first-child .plan-volume {
+  white-space: normal;
 }
 
 .plan-card.is-featured .plan-volume {
@@ -2575,9 +2593,11 @@ h1 {
 .plan-features li {
   position: relative;
   padding-left: clamp(1rem, 0.938vw, 1.125rem);
+  padding-right: clamp(0.375rem, 0.521vw, 0.75rem);
   color: var(--text-secondary);
   font-size: clamp(0.7rem, 0.625vw, 0.8125rem);
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .plan-features li::before {
@@ -2601,7 +2621,7 @@ h1 {
   font-size: clamp(0.75rem, 0.677vw, 0.8125rem);
   font-weight: 600;
   color: var(--accent);
-  margin: 0 0 clamp(1.25rem, 1.458vw, 1.75rem);
+  margin: auto 0 clamp(0.875rem, 1.042vw, 1.25rem);
 }
 
 .plan-card.is-featured .plan-trial {
@@ -2609,17 +2629,22 @@ h1 {
 }
 
 .plan-cta {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  box-sizing: border-box;
   text-align: center;
-  padding: clamp(0.5625rem, 0.625vw, 0.75rem) clamp(0.625rem, 0.833vw, 1.25rem);
+  padding: clamp(0.5625rem, 0.625vw, 0.75rem) clamp(0.375rem, 0.625vw, 1rem);
   border-radius: 999px;
-  font-size: clamp(0.7rem, 0.677vw, 0.875rem);
+  font-size: clamp(0.625rem, 0.625vw, 0.8125rem);
   font-weight: 600;
+  line-height: 1.15;
   transition: background 180ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 180ms ease;
   cursor: pointer;
   text-decoration: none;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .plan-cta-outline {
@@ -2680,6 +2705,14 @@ h1 {
 }
 
 @media (max-width: 1180px) {
+  .pricing-section {
+    overflow-x: visible;
+  }
+
+  .pricing-section .container {
+    min-width: 0;
+  }
+
   .pricing-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     max-width: 56rem;
