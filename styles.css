@@ -75,6 +75,8 @@
 }
 
 html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   scroll-behavior: smooth;
 }
 
@@ -85,6 +87,15 @@ body {
   font-family: "Inter", "Segoe UI", sans-serif;
   line-height: 1.55;
   text-rendering: optimizeLegibility;
+}
+
+/* Firefox is the visual reference. Chromium/WebKit render the layout larger,
+   so this browser-scoped base size brings rem/em-based sizing in line without
+   changing Firefox. */
+@supports (-webkit-appearance: none) {
+  html {
+    font-size: 87.5%;
+  }
 }
 
 a {
@@ -2732,6 +2743,12 @@ html.home-page body {
 
 html.home-page body {
   zoom: var(--screen-fit-scale);
+}
+
+@supports (-webkit-appearance: none) {
+  html.home-page body {
+    zoom: calc(var(--screen-fit-scale) * 0.875);
+  }
 }
 
 html.home-page.is-screen-fit {
