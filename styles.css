@@ -1159,7 +1159,7 @@ h1 {
 
 .blog-related-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
 }
 
@@ -1177,6 +1177,11 @@ h1 {
   box-shadow: 0 14px 34px rgba(93, 48, 133, 0.12);
 }
 
+.blog-related-card[aria-current="page"] {
+  border-color: rgba(93, 48, 133, 0.42);
+  box-shadow: 0 12px 30px rgba(93, 48, 133, 0.1);
+}
+
 .blog-related-card img {
   display: block;
   width: 100%;
@@ -1191,6 +1196,12 @@ h1 {
   color: var(--accent);
   font-size: 13px;
   line-height: 1.35;
+}
+
+@media (max-width: 980px) {
+  .blog-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 720px) {
