@@ -49,6 +49,8 @@
   --home-xl-max: 122.5rem;
   --testimonials-max: 102.5rem;
   --blog-max: 93.75rem;
+  --testimonial-card-min: 20rem;
+  --blog-card-min: 21.5rem;
   --hero-panel-max: 47.5rem;
   --nav-gap: 1.5rem;
   --nav-padding-y: 0.875rem;
@@ -69,6 +71,7 @@
 *,
 *::before,
 *::after {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -111,14 +114,22 @@ a {
 
 .nav-inner {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 24px;
   padding: 14px 0;
 }
 
 .logo {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -182,6 +193,8 @@ a {
 
 .nav-links {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -208,8 +221,14 @@ a {
 }
 
 .nav-links a {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   padding: 8px 14px;
   border-radius: 999px;
@@ -317,6 +336,8 @@ a {
 }
 
 .nav-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   gap: 10px;
 }
@@ -414,8 +435,14 @@ a {
 }
 
 .btn {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   border-radius: var(--radius);
   padding: 8px 20px;
@@ -429,6 +456,7 @@ a {
     box-shadow 0.15s ease;
   border: 1px solid transparent;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .btn-login,
@@ -834,6 +862,7 @@ h1 {
 
 .home-card-grid {
   margin-top: 34px;
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
@@ -873,24 +902,34 @@ h1 {
 }
 
 .home-testimonials .home-card-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--testimonial-card-min)), 1fr));
   gap: clamp(24px, 2.6vw, 40px);
 }
 
 .home-testimonials .home-card {
   min-height: 330px;
-  padding: clamp(42px, 4vw, 58px);
+  min-width: 0;
+  padding: clamp(1.75rem, 2.1vw, 3.625rem);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 
 .home-testimonials .home-card p {
-  font-size: 18px;
+  font-size: clamp(1rem, 0.72vw, 1.125rem);
   line-height: 1.9;
 }
 
 .testimonial-author {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 14px;
   margin-top: auto;
@@ -911,7 +950,11 @@ h1 {
 }
 
 .testimonial-rating {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   gap: 6px;
   margin-bottom: 22px;
@@ -937,6 +980,7 @@ h1 {
 }
 
 .home-blog .home-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--blog-card-min)), 1fr));
   gap: clamp(30px, 4vw, 56px);
 }
 
@@ -956,7 +1000,7 @@ h1 {
 }
 
 .home-blog-content {
-  padding: clamp(24px, 2.6vw, 34px);
+  padding: clamp(1.375rem, 1.65vw, 2.125rem);
 }
 
 .home-blog-card h3 {
@@ -1431,6 +1475,7 @@ body {
 .nav-links a {
   padding: var(--nav-link-padding-y) var(--nav-link-padding-x) !important;
   font-size: var(--nav-font-size) !important;
+  white-space: nowrap !important;
 }
 
 .nav-actions {
@@ -1440,11 +1485,13 @@ body {
 
 .nav-actions .btn {
   min-height: var(--nav-btn-min-height) !important;
+  white-space: nowrap !important;
 }
 
 .btn {
   padding: var(--nav-btn-padding-y) var(--nav-btn-padding-x) !important;
   font-size: var(--nav-font-size) !important;
+  white-space: nowrap !important;
 }
 
 :root {
@@ -1461,6 +1508,56 @@ body {
 
 .home-blog .container {
   width: min(var(--blog-max), 96vw) !important;
+}
+
+.home-testimonials .home-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--testimonial-card-min)), 1fr)) !important;
+  gap: clamp(1.25rem, 1.563vw, 2.5rem) !important;
+}
+
+.home-testimonials .home-card {
+  min-height: clamp(15.5rem, 12.891vw, 20.625rem) !important;
+  padding: clamp(1.5rem, 1.875vw, 3.625rem) !important;
+}
+
+.home-testimonials .home-card p {
+  font-size: clamp(0.95rem, 0.703vw, 1.125rem) !important;
+}
+
+.testimonial-author {
+  gap: clamp(0.625rem, 0.547vw, 0.875rem) !important;
+}
+
+.testimonial-author img {
+  width: clamp(2.625rem, 2.109vw, 3.375rem) !important;
+  height: clamp(2.625rem, 2.109vw, 3.375rem) !important;
+}
+
+.testimonial-rating {
+  gap: clamp(0.25rem, 0.234vw, 0.375rem) !important;
+  margin-bottom: clamp(0.875rem, 0.859vw, 1.375rem) !important;
+  font-size: clamp(1rem, 0.859vw, 1.375rem) !important;
+}
+
+.home-blog .home-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--blog-card-min)), 1fr)) !important;
+  gap: clamp(1.5rem, 2.188vw, 3.5rem) !important;
+}
+
+.home-blog-content {
+  padding: clamp(1.25rem, 1.328vw, 2.125rem) !important;
+}
+
+.home-blog-card h3 {
+  font-size: clamp(1rem, 0.844vw, 1.35rem) !important;
+}
+
+.home-blog-card p {
+  min-height: clamp(3.75rem, 2.969vw, 4.75rem) !important;
+}
+
+.home-blog-community {
+  margin-top: clamp(1.5rem, 2.188vw, 3.5rem) !important;
 }
 
 .hero-overlay-panel {
@@ -1562,6 +1659,8 @@ h1 {
     --home-xl-max: 91.875rem;
     --testimonials-max: 76.875rem;
     --blog-max: 70.3125rem;
+    --testimonial-card-min: 18.5rem;
+    --blog-card-min: 20rem;
     --hero-panel-max: 35.625rem;
     --nav-gap: 1.125rem;
     --nav-padding-y: 0.65625rem;
@@ -1595,6 +1694,8 @@ h1 {
     --home-xl-max: 68.875rem;
     --testimonials-max: 57.625rem;
     --blog-max: 52.75rem;
+    --testimonial-card-min: 16.75rem;
+    --blog-card-min: 18.5rem;
     --hero-panel-max: 26.75rem;
     --nav-gap: 0.75rem;
     --nav-padding-y: 0.5rem;
@@ -1642,6 +1743,8 @@ h1 {
     --home-xl-max: 65.375rem;
     --testimonials-max: 54.75rem;
     --blog-max: 50rem;
+    --testimonial-card-min: 17.5rem;
+    --blog-card-min: 18.5rem;
     --hero-panel-max: 25.375rem;
     --nav-gap: 0.625rem;
     --nav-padding-y: 0.4375rem;

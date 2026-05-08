@@ -141,7 +141,7 @@
 
       .home-card-grid,
       .home-testimonials .home-card-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--testimonial-card-min, 20rem)), 1fr));
       }
 
       .home-testimonials .container {
@@ -149,11 +149,11 @@
       }
 
       .home-testimonials .home-card-grid {
-        gap: clamp(24px, calc(var(--fixed-home-width) * 0.026), 40px);
+        gap: clamp(1.25rem, calc(var(--fixed-home-width) * 0.0156), 2.5rem);
       }
 
       .home-testimonials .home-card {
-        padding: clamp(42px, calc(var(--fixed-home-width) * 0.04), 58px);
+        padding: clamp(1.5rem, calc(var(--fixed-home-width) * 0.0188), 3.625rem);
       }
 
       .home-blog .container {
@@ -161,11 +161,12 @@
       }
 
       .home-blog .home-card-grid {
-        gap: clamp(30px, calc(var(--fixed-home-width) * 0.04), 56px);
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--blog-card-min, 21.5rem)), 1fr));
+        gap: clamp(1.5rem, calc(var(--fixed-home-width) * 0.0219), 3.5rem);
       }
 
       .home-blog-content {
-        padding: clamp(24px, calc(var(--fixed-home-width) * 0.026), 34px);
+        padding: clamp(1.25rem, calc(var(--fixed-home-width) * 0.0133), 2.125rem);
       }
 
       .home-blog-card h3 {
