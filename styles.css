@@ -43,14 +43,12 @@
   --border-subtle: rgba(93, 48, 133, 0.22);
   --radius: 8px;
   --radius-card: 12px;
-  --desktop-reference: 2560;
   --container-max: 70rem;
   --home-wide-max: 93.75rem;
   --home-xl-max: 122.5rem;
   --testimonials-max: 102.5rem;
   --blog-max: 93.75rem;
   --testimonial-card-min: 20rem;
-  --blog-card-min: 21.5rem;
   --pricing-max: 112rem;
   --hero-panel-max: 47.5rem;
   --nav-gap: 1.5rem;
@@ -388,8 +386,7 @@ a {
   color: #ffffff;
 }
 
-.navbar.scrolled .btn-login,
-.navbar.scrolled .btn-ghost {
+.navbar.scrolled .btn-login {
   border-color: rgba(93, 48, 133, 0.45);
   color: #111111;
 }
@@ -407,9 +404,7 @@ a {
 }
 
 .navbar.scrolled .btn-login:hover,
-.navbar.scrolled .btn-login:focus-visible,
-.navbar.scrolled .btn-ghost:hover,
-.navbar.scrolled .btn-ghost:focus-visible {
+.navbar.scrolled .btn-login:focus-visible {
   border-color: rgba(93, 48, 133, 0.75);
 }
 
@@ -460,8 +455,7 @@ a {
   white-space: nowrap;
 }
 
-.btn-login,
-.btn-ghost {
+.btn-login {
   background: transparent;
   border-color: rgba(255, 255, 255, 0.3);
   color: #ffffff;
@@ -509,9 +503,7 @@ a {
 }
 
 .btn-login:hover,
-.btn-login:focus-visible,
-.btn-ghost:hover,
-.btn-ghost:focus-visible {
+.btn-login:focus-visible {
   border-color: rgba(255, 255, 255, 0.95);
 }
 
@@ -758,16 +750,14 @@ h1 {
   order: 2;
 }
 
-.home-copy h2,
-.home-centered h2 {
+.home-copy h2 {
   margin: 0 0 18px;
   font-size: clamp(2rem, 4vw, 3.4rem);
   line-height: 1.08;
   letter-spacing: -0.04em;
 }
 
-.home-copy p,
-.home-centered p {
+.home-copy p {
   margin: 0;
   color: var(--text-secondary);
   font-size: clamp(1rem, 1.5vw, 1.15rem);
@@ -775,7 +765,6 @@ h1 {
 }
 
 .home-band-purple .home-copy p,
-.home-band-purple .home-centered p,
 .home-band-purple .section-label {
   color: rgba(255, 255, 255, 0.82);
 }
@@ -849,16 +838,6 @@ h1 {
 .home-video-slot video::-webkit-media-controls-enclosure,
 .home-video-slot video::-webkit-media-controls-panel {
   display: none !important;
-}
-
-.home-centered {
-  width: min(820px, 100%);
-  margin: 0 auto;
-  text-align: center;
-}
-
-.home-centered .btn {
-  margin-top: 28px;
 }
 
 .home-card-grid {
@@ -1600,13 +1579,11 @@ h1 {
   width: clamp(57.5rem, 101.563vw, 162.5rem) !important;
 }
 
-.home-copy h2,
-.home-centered h2 {
+.home-copy h2 {
   font-size: clamp(1.85rem, 2.125vw, 3.4rem) !important;
 }
 
-.home-copy p,
-.home-centered p {
+.home-copy p {
   font-size: clamp(0.98rem, 0.719vw, 1.15rem) !important;
 }
 
@@ -1639,7 +1616,6 @@ h1 {
     --testimonials-max: 76.875rem;
     --blog-max: 70.3125rem;
     --testimonial-card-min: 18.5rem;
-    --blog-card-min: 20rem;
     --pricing-max: 96rem;
     --hero-panel-max: 35.625rem;
     --nav-gap: 1.125rem;
@@ -1675,7 +1651,6 @@ h1 {
     --testimonials-max: 57.625rem;
     --blog-max: 52.75rem;
     --testimonial-card-min: 16.75rem;
-    --blog-card-min: 18.5rem;
     --pricing-max: 90rem;
     --hero-panel-max: 26.75rem;
     --nav-gap: 0.75rem;
@@ -1711,8 +1686,7 @@ h1 {
     grid-template-columns: minmax(0, 1.45fr) minmax(14rem, 0.55fr) !important;
   }
 
-  .home-copy h2,
-  .home-centered h2 {
+  .home-copy h2 {
     letter-spacing: 0;
   }
 }
@@ -1725,7 +1699,6 @@ h1 {
     --testimonials-max: 54.75rem;
     --blog-max: 50rem;
     --testimonial-card-min: 17.5rem;
-    --blog-card-min: 18.5rem;
     --pricing-max: 84rem;
     --hero-panel-max: 25.375rem;
     --nav-gap: 0.625rem;
@@ -2298,35 +2271,6 @@ h1 {
   margin-bottom: 0;
 }
 
-.historia-visual {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.historia-stat {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-card);
-  padding: 28px 24px;
-  text-align: center;
-}
-
-.historia-stat-number {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin-bottom: 8px;
-}
-
-.historia-stat-label {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
 .team-header {
   text-align: center;
   margin-bottom: 56px;
@@ -2540,31 +2484,6 @@ h1 {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.plan-vat {
-  font-size: clamp(0.625rem, 0.573vw, 0.6875rem);
-  color: var(--text-secondary);
-  opacity: 0.7;
-  margin: 0 0 clamp(0.875rem, 1.042vw, 1.25rem);
-  letter-spacing: 0.01em;
-}
-
-.plan-vat-final {
-  margin: 2px 0 6px;
-  font-size: clamp(0.6875rem, 0.625vw, 0.75rem);
-  color: var(--text-secondary);
-  opacity: 0.78;
-}
-
-.plan-card.is-featured .plan-vat {
-  color: rgba(255, 255, 255, 0.5);
-  opacity: 1;
-}
-
-.plan-card.is-featured .plan-vat-final {
-  color: rgba(255, 255, 255, 0.72);
-  opacity: 1;
-}
-
 .plan-divider {
   height: 1px;
   background: var(--border-subtle);
@@ -2749,15 +2668,6 @@ h1 {
 }
 
 @media (max-width: 820px) {
-  .historia-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  .historia-visual {
-    max-width: 400px;
-  }
-
   .about-hero {
     padding: 120px 0 64px;
   }
@@ -2805,7 +2715,220 @@ h1 {
     max-width: 340px;
   }
 
-  .historia-visual {
-    grid-template-columns: repeat(2, 1fr);
-  }
+}
+
+/* Home page fixed-reference layout overrides.
+   These used to live inline in index.html and are scoped here to keep
+   the other pages on the shared responsive defaults. */
+html.home-page {
+  --fixed-home-width: max(100vw, 1366px);
+  --screen-fit-scale: 1;
+}
+
+html.home-page,
+html.home-page body {
+  min-width: 1366px;
+}
+
+html.home-page body {
+  zoom: var(--screen-fit-scale);
+}
+
+html.home-page.is-screen-fit {
+  overflow-x: hidden;
+}
+
+html.home-page .navbar {
+  min-width: 1366px;
+}
+
+html.home-page .container {
+  width: min(1120px, calc(var(--fixed-home-width) * 0.92));
+}
+
+html.home-page .hero-overlay-panel {
+  width: min(760px, calc(var(--fixed-home-width) * 0.94));
+  padding: clamp(24px, calc(var(--fixed-home-width) * 0.04), 36px);
+}
+
+html.home-page h1 {
+  font-size: clamp(2.5rem, calc(var(--fixed-home-width) * 0.06), 3.75rem);
+}
+
+html.home-page .section-title {
+  font-size: clamp(2rem, calc(var(--fixed-home-width) * 0.037), 2.25rem);
+}
+
+html.home-page .section-title-small {
+  font-size: clamp(1.6rem, calc(var(--fixed-home-width) * 0.03), 1.75rem);
+}
+
+html.home-page .home-band {
+  padding: clamp(78px, calc(var(--fixed-home-width) * 0.09), 132px) 0;
+}
+
+html.home-page .home-split,
+html.home-page .home-split-reverse {
+  grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(56px, calc(var(--fixed-home-width) * 0.07), 112px);
+}
+
+html.home-page .home-split-video {
+  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+  width: min(1500px, calc(var(--fixed-home-width) * 0.94));
+  gap: clamp(48px, calc(var(--fixed-home-width) * 0.06), 96px);
+}
+
+html.home-page .home-split-reverse {
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+}
+
+html.home-page .home-split-reverse .home-copy {
+  order: 2;
+}
+
+html.home-page .home-video-slot {
+  min-height: clamp(520px, calc(var(--fixed-home-width) * 0.58), 760px);
+  overflow: hidden;
+}
+
+html.home-page .home-media {
+  height: clamp(520px, calc(var(--fixed-home-width) * 0.58), 760px);
+}
+
+html.home-page .home-split-video .home-media {
+  width: clamp(820px, calc(var(--fixed-home-width) * 0.62), 1120px);
+  height: auto;
+}
+
+html.home-page .home-split-video .home-media-large {
+  width: clamp(1320px, calc(var(--fixed-home-width) * 0.96), 1760px);
+}
+
+html.home-page .home-split-video-large {
+  grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1.9fr);
+  gap: clamp(18px, calc(var(--fixed-home-width) * 0.024), 42px);
+  width: min(1960px, calc(var(--fixed-home-width) * 0.99));
+}
+
+html.home-page .home-split-video-large:not(.home-split-reverse) {
+  grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1.9fr);
+}
+
+html.home-page .home-split-video-large.home-split-reverse {
+  grid-template-columns: minmax(0, 1.9fr) minmax(260px, 0.45fr);
+}
+
+html.home-page .home-split-video-large .home-video-slot-large {
+  min-height: clamp(680px, calc(var(--fixed-home-width) * 0.76), 980px);
+  overflow: visible;
+}
+
+html.home-page .home-split-video-large .home-media-large {
+  width: clamp(1900px, calc(var(--fixed-home-width) * 1.32), 2600px);
+  transform: none;
+}
+
+html.home-page .home-copy h2 {
+  font-size: clamp(2rem, calc(var(--fixed-home-width) * 0.04), 3.4rem);
+}
+
+html.home-page .home-copy p {
+  font-size: clamp(1rem, calc(var(--fixed-home-width) * 0.015), 1.15rem);
+}
+
+html.home-page .home-card-grid,
+html.home-page .home-testimonials .home-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--testimonial-card-min, 20rem)), 1fr));
+}
+
+html.home-page .home-testimonials .container {
+  width: min(1640px, calc(var(--fixed-home-width) * 0.98));
+}
+
+html.home-page .home-testimonials .home-card-grid {
+  gap: clamp(1.25rem, calc(var(--fixed-home-width) * 0.0156), 2.5rem);
+}
+
+html.home-page .home-testimonials .home-card {
+  padding: clamp(1.5rem, calc(var(--fixed-home-width) * 0.0188), 3.625rem);
+}
+
+html.home-page .home-blog .container {
+  width: min(1500px, calc(var(--fixed-home-width) * 0.96));
+}
+
+html.home-page .home-blog .home-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, calc(var(--fixed-home-width) * 0.0219), 3.5rem);
+}
+
+html.home-page .home-blog-content {
+  padding: clamp(1.25rem, calc(var(--fixed-home-width) * 0.0133), 2.125rem);
+}
+
+html.home-page .home-blog-card h3 {
+  font-size: clamp(1.15rem, calc(var(--fixed-home-width) * 0.016), 1.35rem);
+}
+
+html.home-page .home-blog-community {
+  margin-top: clamp(30px, calc(var(--fixed-home-width) * 0.04), 56px);
+}
+
+html.home-page .footer-inner {
+  grid-template-columns: auto 1fr auto;
+  text-align: left;
+  justify-items: stretch;
+}
+
+html.home-page .nav-inner {
+  flex-wrap: nowrap;
+  gap: 24px;
+}
+
+html.home-page .nav-links {
+  width: auto;
+  justify-content: flex-start;
+  order: 0;
+  gap: 8px;
+  padding-top: 0;
+  margin-right: 6px;
+}
+
+html.home-page .nav-actions {
+  margin-left: 0;
+  gap: 10px;
+}
+
+html.home-page .hero {
+  height: 210vh;
+}
+
+html.home-page .hero-subtitle {
+  font-size: 18px;
+}
+
+html.home-page .btn {
+  padding: 8px 20px;
+}
+
+html.home-page .btn-hero {
+  height: 48px;
+  padding: 0 32px;
+}
+
+html.home-page .whatsapp-community-inner {
+  padding: 30px;
+}
+
+html.home-page .whatsapp-float {
+  right: 56px;
+  bottom: 56px;
+  width: 68px;
+  height: 68px;
+}
+
+html.home-page .whatsapp-float svg {
+  width: 38px;
+  height: 38px;
 }
