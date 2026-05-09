@@ -43,15 +43,40 @@
   --border-subtle: rgba(93, 48, 133, 0.22);
   --radius: 8px;
   --radius-card: 12px;
+  --container-max: 70rem;
+  --home-wide-max: 93.75rem;
+  --home-xl-max: 122.5rem;
+  --testimonials-max: 102.5rem;
+  --blog-max: 93.75rem;
+  --testimonial-card-min: 20rem;
+  --pricing-max: 112rem;
+  --hero-panel-max: 47.5rem;
+  --nav-gap: 1.5rem;
+  --nav-padding-y: 0.875rem;
+  --nav-logo-height: 2.5rem;
+  --nav-headmark-size: 2.125rem;
+  --nav-links-gap: 0.5rem;
+  --nav-links-margin: 0.375rem;
+  --nav-link-padding-y: 0.5rem;
+  --nav-link-padding-x: 0.875rem;
+  --nav-font-size: 0.9375rem;
+  --nav-actions-gap: 0.625rem;
+  --nav-btn-padding-y: 0.5rem;
+  --nav-btn-padding-x: 1.25rem;
+  --nav-btn-min-height: 2.375rem;
+  --nav-width-max: 70rem;
 }
 
 *,
 *::before,
 *::after {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   scroll-behavior: smooth;
 }
 
@@ -64,13 +89,22 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Firefox is the visual reference. Chromium/WebKit render the layout larger,
+   so this browser-scoped base size brings rem/em-based sizing in line without
+   changing Firefox. */
+@supports (-webkit-appearance: none) {
+  html {
+    font-size: 87.5%;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
 .container {
-  width: min(1120px, 92vw);
+  width: min(var(--container-max), 92vw);
   margin: 0 auto;
 }
 
@@ -90,14 +124,22 @@ a {
 
 .nav-inner {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 24px;
   padding: 14px 0;
 }
 
 .logo {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -161,6 +203,8 @@ a {
 
 .nav-links {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -187,8 +231,14 @@ a {
 }
 
 .nav-links a {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   padding: 8px 14px;
   border-radius: 999px;
@@ -296,6 +346,8 @@ a {
 }
 
 .nav-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   gap: 10px;
 }
@@ -345,8 +397,7 @@ a {
   color: #ffffff;
 }
 
-.navbar.scrolled .btn-login,
-.navbar.scrolled .btn-ghost {
+.navbar.scrolled .btn-login {
   border-color: rgba(93, 48, 133, 0.45);
   color: #111111;
 }
@@ -364,9 +415,7 @@ a {
 }
 
 .navbar.scrolled .btn-login:hover,
-.navbar.scrolled .btn-login:focus-visible,
-.navbar.scrolled .btn-ghost:hover,
-.navbar.scrolled .btn-ghost:focus-visible {
+.navbar.scrolled .btn-login:focus-visible {
   border-color: rgba(93, 48, 133, 0.75);
 }
 
@@ -393,8 +442,14 @@ a {
 }
 
 .btn {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   border-radius: var(--radius);
   padding: 8px 20px;
@@ -408,10 +463,10 @@ a {
     box-shadow 0.15s ease;
   border: 1px solid transparent;
   cursor: pointer;
+  white-space: nowrap;
 }
 
-.btn-login,
-.btn-ghost {
+.btn-login {
   background: transparent;
   border-color: rgba(255, 255, 255, 0.3);
   color: #ffffff;
@@ -459,9 +514,7 @@ a {
 }
 
 .btn-login:hover,
-.btn-login:focus-visible,
-.btn-ghost:hover,
-.btn-ghost:focus-visible {
+.btn-login:focus-visible {
   border-color: rgba(255, 255, 255, 0.95);
 }
 
@@ -708,16 +761,14 @@ h1 {
   order: 2;
 }
 
-.home-copy h2,
-.home-centered h2 {
+.home-copy h2 {
   margin: 0 0 18px;
   font-size: clamp(2rem, 4vw, 3.4rem);
   line-height: 1.08;
   letter-spacing: -0.04em;
 }
 
-.home-copy p,
-.home-centered p {
+.home-copy p {
   margin: 0;
   color: var(--text-secondary);
   font-size: clamp(1rem, 1.5vw, 1.15rem);
@@ -725,7 +776,6 @@ h1 {
 }
 
 .home-band-purple .home-copy p,
-.home-band-purple .home-centered p,
 .home-band-purple .section-label {
   color: rgba(255, 255, 255, 0.82);
 }
@@ -801,18 +851,9 @@ h1 {
   display: none !important;
 }
 
-.home-centered {
-  width: min(820px, 100%);
-  margin: 0 auto;
-  text-align: center;
-}
-
-.home-centered .btn {
-  margin-top: 28px;
-}
-
 .home-card-grid {
   margin-top: 34px;
+  display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
@@ -852,24 +893,34 @@ h1 {
 }
 
 .home-testimonials .home-card-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--testimonial-card-min)), 1fr));
   gap: clamp(24px, 2.6vw, 40px);
 }
 
 .home-testimonials .home-card {
   min-height: 330px;
-  padding: clamp(42px, 4vw, 58px);
+  min-width: 0;
+  padding: clamp(1.75rem, 2.1vw, 3.625rem);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 
 .home-testimonials .home-card p {
-  font-size: 18px;
+  font-size: clamp(1rem, 0.72vw, 1.125rem);
   line-height: 1.9;
 }
 
 .testimonial-author {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   gap: 14px;
   margin-top: auto;
@@ -890,7 +941,11 @@ h1 {
 }
 
 .testimonial-rating {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   gap: 6px;
   margin-bottom: 22px;
@@ -916,6 +971,7 @@ h1 {
 }
 
 .home-blog .home-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(30px, 4vw, 56px);
 }
 
@@ -935,7 +991,7 @@ h1 {
 }
 
 .home-blog-content {
-  padding: clamp(24px, 2.6vw, 34px);
+  padding: clamp(1.375rem, 1.65vw, 2.125rem);
 }
 
 .home-blog-card h3 {
@@ -955,44 +1011,11 @@ h1 {
   margin-top: clamp(30px, 4vw, 56px);
 }
 
-.blog-article-page .navbar {
-  background: rgba(255, 255, 255, 0.9);
-  border-bottom-color: rgba(93, 48, 133, 0.12);
-}
-
-.blog-article-page .navbar .logo-img {
-  filter: none;
-}
-
-.blog-article-page .nav-links a,
-.blog-article-page .nav-links a > span {
-  color: #111111;
-}
-
-.blog-article-page .nav-links a::before,
-.blog-article-page .nav-pill {
-  background: var(--bg-gradient-brand);
-}
-
-.blog-article-page .nav-links a::after {
-  color: #ffffff;
-}
-
-.blog-article-page .btn-login {
-  border-color: rgba(93, 48, 133, 0.45);
-  color: #111111;
-}
-
-.blog-article-page .btn-login > span {
-  color: #111111;
-}
-
-.blog-article-page .btn-login::before {
-  background: var(--bg-gradient-brand);
-}
-
-.blog-article-page .btn-login::after {
-  color: #ffffff;
+.blog-article-page .navbar:not(.scrolled) {
+  background: linear-gradient(135deg, #58287d, #62328a, #6e3a9a, #62328a, #58287d);
+  background-size: 300% 300%;
+  animation: purpleWave 6s ease-in-out infinite;
+  border-bottom-color: transparent;
 }
 
 .blog-article {
@@ -1126,7 +1149,7 @@ h1 {
 
 .blog-related-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
 }
 
@@ -1144,6 +1167,11 @@ h1 {
   box-shadow: 0 14px 34px rgba(93, 48, 133, 0.12);
 }
 
+.blog-related-card[aria-current="page"] {
+  border-color: rgba(93, 48, 133, 0.42);
+  box-shadow: 0 12px 30px rgba(93, 48, 133, 0.1);
+}
+
 .blog-related-card img {
   display: block;
   width: 100%;
@@ -1158,6 +1186,12 @@ h1 {
   color: var(--accent);
   font-size: 13px;
   line-height: 1.35;
+}
+
+@media (max-width: 980px) {
+  .blog-related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 720px) {
@@ -1366,6 +1400,394 @@ h1 {
     height: 32px;
   }
 
+}
+
+/* Resolution scaling for the home page.
+   The desktop design was composed at 2560px wide; below that, these rules
+   keep the same proportions instead of letting 2K-sized clamps stay at max. */
+html,
+body {
+  min-width: 0 !important;
+}
+
+body {
+  zoom: 1 !important;
+}
+
+.navbar {
+  min-width: 0 !important;
+}
+
+.nav-inner {
+  width: min(var(--nav-width-max), 92vw) !important;
+  flex-wrap: nowrap !important;
+  gap: var(--nav-gap) !important;
+  padding: var(--nav-padding-y) 0 !important;
+}
+
+.nav-headmark,
+.nav-headmark-canvas {
+  width: var(--nav-headmark-size) !important;
+  height: var(--nav-headmark-size) !important;
+}
+
+.logo-img {
+  max-height: var(--nav-logo-height) !important;
+}
+
+.nav-links {
+  flex-wrap: nowrap !important;
+  gap: var(--nav-links-gap) !important;
+  margin-right: var(--nav-links-margin) !important;
+}
+
+.nav-links a {
+  padding: var(--nav-link-padding-y) var(--nav-link-padding-x) !important;
+  font-size: var(--nav-font-size) !important;
+  white-space: nowrap !important;
+}
+
+.nav-actions {
+  flex-wrap: nowrap !important;
+  gap: var(--nav-actions-gap) !important;
+}
+
+.nav-actions .btn {
+  min-height: var(--nav-btn-min-height) !important;
+  white-space: nowrap !important;
+}
+
+.btn {
+  padding: var(--nav-btn-padding-y) var(--nav-btn-padding-x) !important;
+  font-size: var(--nav-font-size) !important;
+  white-space: nowrap !important;
+}
+
+:root {
+  --fixed-home-width: 100vw !important;
+}
+
+.container {
+  width: min(var(--container-max), 92vw) !important;
+}
+
+.home-testimonials .container {
+  width: min(var(--testimonials-max), 98vw) !important;
+}
+
+.home-blog .container {
+  width: min(var(--blog-max), 96vw) !important;
+}
+
+.home-testimonials .home-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--testimonial-card-min)), 1fr)) !important;
+  gap: clamp(1.25rem, 1.563vw, 2.5rem) !important;
+}
+
+.home-testimonials .home-card {
+  min-height: clamp(15.5rem, 12.891vw, 20.625rem) !important;
+  padding: clamp(1.5rem, 1.875vw, 3.625rem) !important;
+}
+
+.home-testimonials .home-card p {
+  font-size: clamp(0.95rem, 0.703vw, 1.125rem) !important;
+}
+
+.testimonial-author {
+  gap: clamp(0.625rem, 0.547vw, 0.875rem) !important;
+}
+
+.testimonial-author img {
+  width: clamp(2.625rem, 2.109vw, 3.375rem) !important;
+  height: clamp(2.625rem, 2.109vw, 3.375rem) !important;
+}
+
+.testimonial-rating {
+  gap: clamp(0.25rem, 0.234vw, 0.375rem) !important;
+  margin-bottom: clamp(0.875rem, 0.859vw, 1.375rem) !important;
+  font-size: clamp(1rem, 0.859vw, 1.375rem) !important;
+}
+
+.home-blog .home-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: clamp(1.5rem, 2.188vw, 3.5rem) !important;
+}
+
+.home-blog-content {
+  padding: clamp(1.25rem, 1.328vw, 2.125rem) !important;
+}
+
+.home-blog-card h3 {
+  font-size: clamp(1rem, 0.844vw, 1.35rem) !important;
+}
+
+.home-blog-card p {
+  min-height: clamp(3.75rem, 2.969vw, 4.75rem) !important;
+}
+
+.home-blog-community {
+  margin-top: clamp(1.5rem, 2.188vw, 3.5rem) !important;
+}
+
+.hero-overlay-panel {
+  width: min(var(--hero-panel-max), 94vw) !important;
+  padding: clamp(1.5rem, 1.406vw, 2.25rem) !important;
+}
+
+h1 {
+  font-size: clamp(2rem, 2.344vw, 3.75rem) !important;
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 1.406vw, 2.25rem) !important;
+}
+
+.section-title-small {
+  font-size: clamp(1.25rem, 1.094vw, 1.75rem) !important;
+}
+
+.home-band {
+  padding: clamp(4.2rem, 5.156vw, 8.25rem) 0 !important;
+}
+
+.home-split,
+.home-split-reverse {
+  gap: clamp(1.875rem, 4.375vw, 7rem) !important;
+}
+
+.home-split-video {
+  width: min(var(--home-wide-max), 94vw) !important;
+  gap: clamp(1.75rem, 3.75vw, 6rem) !important;
+}
+
+.home-split-video-large {
+  width: min(var(--home-xl-max), 99vw) !important;
+  gap: clamp(1rem, 1.641vw, 2.625rem) !important;
+}
+
+.home-video-slot {
+  min-height: clamp(27.75rem, 29.688vw, 47.5rem) !important;
+}
+
+.home-media {
+  height: clamp(27.75rem, 29.688vw, 47.5rem) !important;
+}
+
+.home-split-video .home-media {
+  width: clamp(27.25rem, 43.75vw, 70rem) !important;
+  height: auto !important;
+}
+
+.home-split-video .home-media-large {
+  width: clamp(43.75rem, 68.75vw, 110rem) !important;
+}
+
+.home-split-video-large .home-video-slot-large {
+  min-height: clamp(32.5rem, 38.281vw, 61.25rem) !important;
+}
+
+.home-split-video-large .home-media-large {
+  width: clamp(57.5rem, 101.563vw, 162.5rem) !important;
+}
+
+.home-copy h2 {
+  font-size: clamp(1.85rem, 2.125vw, 3.4rem) !important;
+}
+
+.home-copy p {
+  font-size: clamp(0.98rem, 0.719vw, 1.15rem) !important;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 0.703vw, 1.125rem) !important;
+}
+
+.btn-hero {
+  height: clamp(2.5rem, 1.875vw, 3rem) !important;
+  padding: 0 clamp(1.35rem, 1.25vw, 2rem) !important;
+}
+
+.whatsapp-float {
+  right: clamp(2rem, 2.188vw, 3.5rem) !important;
+  bottom: clamp(2rem, 2.188vw, 3.5rem) !important;
+  width: clamp(3.5rem, 2.656vw, 4.25rem) !important;
+  height: clamp(3.5rem, 2.656vw, 4.25rem) !important;
+}
+
+.whatsapp-float svg {
+  width: clamp(2rem, 1.484vw, 2.375rem) !important;
+  height: clamp(2rem, 1.484vw, 2.375rem) !important;
+}
+
+@media (max-width: 1920px) {
+  :root {
+    --container-max: 52.5rem;
+    --home-wide-max: 70.3125rem;
+    --home-xl-max: 91.875rem;
+    --testimonials-max: 76.875rem;
+    --blog-max: 70.3125rem;
+    --testimonial-card-min: 18.5rem;
+    --pricing-max: 96rem;
+    --hero-panel-max: 35.625rem;
+    --nav-gap: 1.125rem;
+    --nav-padding-y: 0.65625rem;
+    --nav-logo-height: 1.875rem;
+    --nav-headmark-size: 1.625rem;
+    --nav-links-gap: 0.375rem;
+    --nav-links-margin: 0.25rem;
+    --nav-link-padding-y: 0.375rem;
+    --nav-link-padding-x: 0.65625rem;
+    --nav-font-size: 0.875rem;
+    --nav-actions-gap: 0.46875rem;
+    --nav-btn-padding-y: 0.375rem;
+    --nav-btn-padding-x: 0.9375rem;
+    --nav-btn-min-height: 1.875rem;
+    --nav-width-max: 52.5rem;
+  }
+
+  .hero {
+    height: 200vh !important;
+  }
+
+  .home-split-video-large .home-video-slot-large {
+    overflow: hidden !important;
+  }
+}
+
+@media (max-width: 1440px) {
+  :root {
+    --container-max: 39.375rem;
+    --home-wide-max: 52.75rem;
+    --home-xl-max: 68.875rem;
+    --testimonials-max: 57.625rem;
+    --blog-max: 52.75rem;
+    --testimonial-card-min: 16.75rem;
+    --pricing-max: 90rem;
+    --hero-panel-max: 26.75rem;
+    --nav-gap: 0.75rem;
+    --nav-padding-y: 0.5rem;
+    --nav-logo-height: 1.5rem;
+    --nav-headmark-size: 1.375rem;
+    --nav-links-gap: 0.25rem;
+    --nav-links-margin: 0.125rem;
+    --nav-link-padding-y: 0.34rem;
+    --nav-link-padding-x: 0.5rem;
+    --nav-font-size: 0.8125rem;
+    --nav-actions-gap: 0.375rem;
+    --nav-btn-padding-y: 0.34rem;
+    --nav-btn-padding-x: 0.625rem;
+    --nav-btn-min-height: 1.75rem;
+    --nav-width-max: 52rem;
+  }
+
+  .hero-overlay-panel {
+    border-radius: 0.75rem;
+  }
+
+  .kicker,
+  .hero-bullets {
+    font-size: 0.75rem;
+  }
+
+  .home-split-video-large:not(.home-split-reverse) {
+    grid-template-columns: minmax(14rem, 0.55fr) minmax(0, 1.45fr) !important;
+  }
+
+  .home-split-video-large.home-split-reverse {
+    grid-template-columns: minmax(0, 1.45fr) minmax(14rem, 0.55fr) !important;
+  }
+
+  .home-copy h2 {
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 1366px) {
+  :root {
+    --container-max: 37.375rem;
+    --home-wide-max: 50rem;
+    --home-xl-max: 65.375rem;
+    --testimonials-max: 54.75rem;
+    --blog-max: 50rem;
+    --testimonial-card-min: 17.5rem;
+    --pricing-max: 84rem;
+    --hero-panel-max: 25.375rem;
+    --nav-gap: 0.625rem;
+    --nav-padding-y: 0.4375rem;
+    --nav-logo-height: 1.375rem;
+    --nav-headmark-size: 1.25rem;
+    --nav-links-gap: 0.1875rem;
+    --nav-links-margin: 0;
+    --nav-link-padding-y: 0.3rem;
+    --nav-link-padding-x: 0.4375rem;
+    --nav-font-size: 0.75rem;
+    --nav-actions-gap: 0.3125rem;
+    --nav-btn-padding-y: 0.3rem;
+    --nav-btn-padding-x: 0.5rem;
+    --nav-btn-min-height: 1.625rem;
+    --nav-width-max: 60rem;
+  }
+
+  .container {
+    width: min(var(--container-max), 94vw) !important;
+  }
+
+  .hero {
+    height: 190vh !important;
+  }
+
+  .hero-overlay-panel {
+    width: min(var(--hero-panel-max), 88vw) !important;
+  }
+
+  .home-split-video,
+  .home-split-video-large {
+    width: min(var(--home-xl-max), 96vw) !important;
+  }
+
+  .home-split-video-large .home-media-large {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .nav-inner {
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
+  }
+
+  .nav-links {
+    width: 100% !important;
+    justify-content: center !important;
+    order: 3 !important;
+    gap: 0.5rem !important;
+    padding-top: 0.125rem !important;
+    margin-right: 0 !important;
+  }
+
+  .nav-actions {
+    margin-left: auto !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .home-blog .home-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-blog .home-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .nav-actions {
+    gap: 0.5rem !important;
+  }
+
+  .btn {
+    padding: 0.5rem 0.875rem !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1836,6 +2258,8 @@ h1 {
 .historia-grid {
   display: block;
   max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .historia-text h2 {
@@ -1856,35 +2280,6 @@ h1 {
 
 .historia-text p:last-child {
   margin-bottom: 0;
-}
-
-.historia-visual {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.historia-stat {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-card);
-  padding: 28px 24px;
-  text-align: center;
-}
-
-.historia-stat-number {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin-bottom: 8px;
-}
-
-.historia-stat-label {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.4;
 }
 
 .team-header {
@@ -1971,27 +2366,38 @@ h1 {
 
 .pricing-section {
   flex: 1;
-  padding: 72px 0 64px;
+  padding: clamp(4rem, 3.75vw, 4.5rem) 0 clamp(3.5rem, 3.333vw, 4rem);
   background: var(--bg-main);
+  overflow-x: auto;
 }
 
 .pricing-section .container {
-  width: min(1380px, 96vw);
+  width: min(var(--pricing-max), 98vw);
+  min-width: min(var(--pricing-max), 90rem);
 }
 
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 20px;
-  align-items: start;
+  gap: clamp(0.75rem, 0.833vw, 1.25rem);
+  align-items: stretch;
 }
 
 .plan-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-card);
-  padding: 36px 26px 32px;
+  min-width: 0;
+  min-height: clamp(27rem, 32vw, 34rem);
+  padding: clamp(1.375rem, 1.563vw, 2rem) clamp(1rem, 1.146vw, 1.5rem) clamp(1.375rem, 1.458vw, 1.75rem);
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -2017,27 +2423,27 @@ h1 {
 
 .plan-badge {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: clamp(0.625rem, 0.729vw, 0.875rem);
+  right: clamp(0.625rem, 0.729vw, 0.875rem);
   background: transparent;
   color: #ffffff;
-  font-size: 11px;
+  font-size: clamp(0.5625rem, 0.521vw, 0.6875rem);
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  padding: 4px 12px;
+  padding: clamp(0.1875rem, 0.208vw, 0.25rem) clamp(0.5rem, 0.625vw, 0.75rem);
   border-radius: 999px;
   border: 1.5px solid rgba(255, 255, 255, 0.55);
   white-space: nowrap;
 }
 
 .plan-name {
-  font-size: 11px;
+  font-size: clamp(0.5625rem, 0.521vw, 0.6875rem);
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent);
-  margin: 0 0 20px;
+  margin: 0 0 clamp(0.875rem, 1.042vw, 1.25rem);
 }
 
 .plan-card.is-featured .plan-name {
@@ -2045,18 +2451,22 @@ h1 {
 }
 
 .plan-price-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
   align-items: flex-start;
   gap: 2px;
   line-height: 1;
-  margin-bottom: 6px;
+  margin-bottom: clamp(0.25rem, 0.313vw, 0.375rem);
 }
 
 .plan-currency {
-  font-size: 20px;
+  font-size: clamp(0.9375rem, 0.833vw, 1.25rem);
   font-weight: 700;
   color: var(--text-primary);
-  margin-top: 8px;
+  margin-top: clamp(0.375rem, 0.417vw, 0.5rem);
 }
 
 .plan-card.is-featured .plan-currency {
@@ -2064,7 +2474,7 @@ h1 {
 }
 
 .plan-amount {
-  font-size: clamp(2.4rem, 3.5vw, 2.9rem);
+  font-size: clamp(1.75rem, 1.979vw, 2.65rem);
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -0.03em;
@@ -2075,44 +2485,20 @@ h1 {
 }
 
 .plan-period {
-  font-size: 13px;
+  font-size: clamp(0.75rem, 0.677vw, 0.8125rem);
   color: var(--text-secondary);
   margin: 0 0 4px;
+  padding-right: clamp(0.375rem, 0.521vw, 0.75rem);
 }
 
 .plan-card.is-featured .plan-period {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.plan-vat {
-  font-size: 11px;
-  color: var(--text-secondary);
-  opacity: 0.7;
-  margin: 0 0 20px;
-  letter-spacing: 0.01em;
-}
-
-.plan-vat-final {
-  margin: 2px 0 6px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  opacity: 0.78;
-}
-
-.plan-card.is-featured .plan-vat {
-  color: rgba(255, 255, 255, 0.5);
-  opacity: 1;
-}
-
-.plan-card.is-featured .plan-vat-final {
-  color: rgba(255, 255, 255, 0.72);
-  opacity: 1;
-}
-
 .plan-divider {
   height: 1px;
   background: var(--border-subtle);
-  margin: 0 0 20px;
+  margin: 0 0 clamp(0.875rem, 1.042vw, 1.25rem);
 }
 
 .plan-card.is-featured .plan-divider {
@@ -2120,10 +2506,17 @@ h1 {
 }
 
 .plan-volume {
-  font-size: 14px;
+  box-sizing: border-box;
+  padding-right: clamp(0.375rem, 0.521vw, 0.75rem);
+  font-size: clamp(0.66rem, 0.625vw, 0.875rem);
   color: var(--text-secondary);
   line-height: 1.5;
   margin: 0 0 8px;
+  white-space: nowrap;
+}
+
+.plan-card:first-child .plan-volume {
+  white-space: normal;
 }
 
 .plan-card.is-featured .plan-volume {
@@ -2132,18 +2525,20 @@ h1 {
 
 .plan-features {
   display: grid;
-  gap: 9px;
-  margin: 0 0 24px;
+  gap: clamp(0.4375rem, 0.469vw, 0.5625rem);
+  margin: 0 0 clamp(1.125rem, 1.25vw, 1.5rem);
   padding: 0;
   list-style: none;
 }
 
 .plan-features li {
   position: relative;
-  padding-left: 18px;
+  padding-left: clamp(1rem, 0.938vw, 1.125rem);
+  padding-right: clamp(0.375rem, 0.521vw, 0.75rem);
   color: var(--text-secondary);
-  font-size: 13px;
+  font-size: clamp(0.7rem, 0.625vw, 0.8125rem);
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .plan-features li::before {
@@ -2164,10 +2559,10 @@ h1 {
 }
 
 .plan-trial {
-  font-size: 13px;
+  font-size: clamp(0.75rem, 0.677vw, 0.8125rem);
   font-weight: 600;
   color: var(--accent);
-  margin: 0 0 28px;
+  margin: auto 0 clamp(0.875rem, 1.042vw, 1.25rem);
 }
 
 .plan-card.is-featured .plan-trial {
@@ -2175,16 +2570,22 @@ h1 {
 }
 
 .plan-cta {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  box-sizing: border-box;
   text-align: center;
-  padding: 12px 20px;
+  padding: clamp(0.5625rem, 0.625vw, 0.75rem) clamp(0.375rem, 0.625vw, 1rem);
   border-radius: 999px;
-  font-size: 14px;
+  font-size: clamp(0.625rem, 0.625vw, 0.8125rem);
   font-weight: 600;
+  line-height: 1.15;
   transition: background 180ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 180ms ease;
   cursor: pointer;
   text-decoration: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .plan-cta-outline {
@@ -2244,10 +2645,18 @@ h1 {
   color: var(--accent-hover);
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1180px) {
+  .pricing-section {
+    overflow-x: visible;
+  }
+
+  .pricing-section .container {
+    min-width: 0;
+  }
+
   .pricing-grid {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 600px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 56rem;
     margin: 0 auto;
   }
 
@@ -2270,15 +2679,6 @@ h1 {
 }
 
 @media (max-width: 820px) {
-  .historia-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  .historia-visual {
-    max-width: 400px;
-  }
-
   .about-hero {
     padding: 120px 0 64px;
   }
@@ -2314,7 +2714,7 @@ h1 {
 @media (max-width: 580px) {
   .pricing-grid {
     grid-template-columns: 1fr;
-    max-width: 360px;
+    max-width: 24rem;
   }
 
   .pricing-hero {
@@ -2326,8 +2726,226 @@ h1 {
     max-width: 340px;
   }
 
-  .historia-visual {
-    grid-template-columns: repeat(2, 1fr);
+}
+
+/* Home page fixed-reference layout overrides.
+   These used to live inline in index.html and are scoped here to keep
+   the other pages on the shared responsive defaults. */
+html.home-page {
+  --fixed-home-width: max(100vw, 1366px);
+  --screen-fit-scale: 1;
+}
+
+html.home-page,
+html.home-page body {
+  min-width: 1366px;
+}
+
+html.home-page body {
+  zoom: var(--screen-fit-scale);
+}
+
+@supports (-webkit-appearance: none) {
+  html.home-page body {
+    zoom: calc(var(--screen-fit-scale) * 0.875);
   }
 }
 
+html.home-page.is-screen-fit {
+  overflow-x: hidden;
+}
+
+html.home-page .navbar {
+  min-width: 1366px;
+}
+
+html.home-page .container {
+  width: min(1120px, calc(var(--fixed-home-width) * 0.92));
+}
+
+html.home-page .hero-overlay-panel {
+  width: min(760px, calc(var(--fixed-home-width) * 0.94));
+  padding: clamp(24px, calc(var(--fixed-home-width) * 0.04), 36px);
+}
+
+html.home-page h1 {
+  font-size: clamp(2.5rem, calc(var(--fixed-home-width) * 0.06), 3.75rem);
+}
+
+html.home-page .section-title {
+  font-size: clamp(2rem, calc(var(--fixed-home-width) * 0.037), 2.25rem);
+}
+
+html.home-page .section-title-small {
+  font-size: clamp(1.6rem, calc(var(--fixed-home-width) * 0.03), 1.75rem);
+}
+
+html.home-page .home-band {
+  padding: clamp(78px, calc(var(--fixed-home-width) * 0.09), 132px) 0;
+}
+
+html.home-page .home-split,
+html.home-page .home-split-reverse {
+  grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(56px, calc(var(--fixed-home-width) * 0.07), 112px);
+}
+
+html.home-page .home-split-video {
+  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+  width: min(1500px, calc(var(--fixed-home-width) * 0.94));
+  gap: clamp(48px, calc(var(--fixed-home-width) * 0.06), 96px);
+}
+
+html.home-page .home-split-reverse {
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+}
+
+html.home-page .home-split-reverse .home-copy {
+  order: 2;
+}
+
+html.home-page .home-video-slot {
+  min-height: clamp(520px, calc(var(--fixed-home-width) * 0.58), 760px);
+  overflow: hidden;
+}
+
+html.home-page .home-media {
+  height: clamp(520px, calc(var(--fixed-home-width) * 0.58), 760px);
+}
+
+html.home-page .home-split-video .home-media {
+  width: clamp(820px, calc(var(--fixed-home-width) * 0.62), 1120px);
+  height: auto;
+}
+
+html.home-page .home-split-video .home-media-large {
+  width: clamp(1320px, calc(var(--fixed-home-width) * 0.96), 1760px);
+}
+
+html.home-page .home-split-video-large {
+  grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1.9fr);
+  gap: clamp(18px, calc(var(--fixed-home-width) * 0.024), 42px);
+  width: min(1960px, calc(var(--fixed-home-width) * 0.99));
+}
+
+html.home-page .home-split-video-large:not(.home-split-reverse) {
+  grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1.9fr);
+}
+
+html.home-page .home-split-video-large.home-split-reverse {
+  grid-template-columns: minmax(0, 1.9fr) minmax(260px, 0.45fr);
+}
+
+html.home-page .home-split-video-large .home-video-slot-large {
+  min-height: clamp(680px, calc(var(--fixed-home-width) * 0.76), 980px);
+  overflow: visible;
+}
+
+html.home-page .home-split-video-large .home-media-large {
+  width: clamp(1900px, calc(var(--fixed-home-width) * 1.32), 2600px);
+  transform: none;
+}
+
+html.home-page .home-copy h2 {
+  font-size: clamp(2rem, calc(var(--fixed-home-width) * 0.04), 3.4rem);
+}
+
+html.home-page .home-copy p {
+  font-size: clamp(1rem, calc(var(--fixed-home-width) * 0.015), 1.15rem);
+}
+
+html.home-page .home-card-grid,
+html.home-page .home-testimonials .home-card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--testimonial-card-min, 20rem)), 1fr));
+}
+
+html.home-page .home-testimonials .container {
+  width: min(1640px, calc(var(--fixed-home-width) * 0.98));
+}
+
+html.home-page .home-testimonials .home-card-grid {
+  gap: clamp(1.25rem, calc(var(--fixed-home-width) * 0.0156), 2.5rem);
+}
+
+html.home-page .home-testimonials .home-card {
+  padding: clamp(1.5rem, calc(var(--fixed-home-width) * 0.0188), 3.625rem);
+}
+
+html.home-page .home-blog .container {
+  width: min(1500px, calc(var(--fixed-home-width) * 0.96));
+}
+
+html.home-page .home-blog .home-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, calc(var(--fixed-home-width) * 0.0219), 3.5rem);
+}
+
+html.home-page .home-blog-content {
+  padding: clamp(1.25rem, calc(var(--fixed-home-width) * 0.0133), 2.125rem);
+}
+
+html.home-page .home-blog-card h3 {
+  font-size: clamp(1.15rem, calc(var(--fixed-home-width) * 0.016), 1.35rem);
+}
+
+html.home-page .home-blog-community {
+  margin-top: clamp(30px, calc(var(--fixed-home-width) * 0.04), 56px);
+}
+
+html.home-page .footer-inner {
+  grid-template-columns: auto 1fr auto;
+  text-align: left;
+  justify-items: stretch;
+}
+
+html.home-page .nav-inner {
+  flex-wrap: nowrap;
+  gap: 24px;
+}
+
+html.home-page .nav-links {
+  width: auto;
+  justify-content: flex-start;
+  order: 0;
+  gap: 8px;
+  padding-top: 0;
+  margin-right: 6px;
+}
+
+html.home-page .nav-actions {
+  margin-left: 0;
+  gap: 10px;
+}
+
+html.home-page .hero {
+  height: 210vh;
+}
+
+html.home-page .hero-subtitle {
+  font-size: 18px;
+}
+
+html.home-page .btn {
+  padding: 8px 20px;
+}
+
+html.home-page .btn-hero {
+  height: 48px;
+  padding: 0 32px;
+}
+
+html.home-page .whatsapp-community-inner {
+  padding: 30px;
+}
+
+html.home-page .whatsapp-float {
+  right: 56px;
+  bottom: 56px;
+  width: 68px;
+  height: 68px;
+}
+
+html.home-page .whatsapp-float svg {
+  width: 38px;
+  height: 38px;
+}
