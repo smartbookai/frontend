@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirma tu cuenta | SmartBook AI</title>
+    <meta
+      name="description"
+      content="Te hemos enviado un correo de confirmación. Accede a él para activar tu cuenta SmartBook AI."
+    />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.pravatar.cc; font-src 'self' data:; media-src 'self'; connect-src 'self' http://localhost:8080; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260506-1" />
+    <style>
+      .confirm-section {
+        padding: 72px 0 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .confirm-card {
+        background: #ffffff;
+        border: 1px solid rgba(93, 48, 133, 0.12);
+        border-radius: 20px;
+        box-shadow: 0 12px 48px rgba(93, 48, 133, 0.10);
+        padding: 56px 48px 48px;
+        max-width: 520px;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto;
+      }
+
+      .confirm-icon-wrap {
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        background: var(--bg-gradient-brand);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 28px;
+        box-shadow: 0 8px 28px rgba(93, 48, 133, 0.30);
+      }
+
+      .confirm-icon-wrap svg {
+        width: 38px;
+        height: 38px;
+        fill: none;
+        stroke: #ffffff;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .confirm-card h1 {
+        font-size: clamp(1.55rem, 4vw, 2rem);
+        font-weight: 800;
+        color: #111111;
+        margin: 0 0 12px;
+        line-height: 1.2;
+      }
+
+      .confirm-intro {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin: 0 0 16px;
+        line-height: 1.6;
+      }
+
+      .confirm-email-pill {
+        display: inline-block;
+        background: rgba(93, 48, 133, 0.07);
+        border: 1px solid rgba(93, 48, 133, 0.22);
+        border-radius: 999px;
+        padding: 9px 22px;
+        font-size: 0.94rem;
+        font-weight: 600;
+        color: #5d3085;
+        margin-bottom: 28px;
+        word-break: break-all;
+        max-width: 100%;
+      }
+
+      .confirm-steps {
+        background: var(--bg-surface);
+        border-radius: 14px;
+        padding: 22px 24px;
+        margin: 0 0 24px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .confirm-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 0.91rem;
+        color: var(--text-secondary);
+        line-height: 1.55;
+        margin: 0;
+      }
+
+      .confirm-step strong {
+        color: var(--text-primary);
+      }
+
+      .step-num {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--bg-gradient-brand);
+        color: #ffffff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1px;
+      }
+
+      .confirm-spam {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        margin: 0 0 28px;
+        opacity: 0.72;
+      }
+
+      .confirm-divider {
+        border: none;
+        border-top: 1px solid var(--border-subtle);
+        margin: 0 0 28px;
+      }
+
+      .confirm-thanks {
+        font-size: 0.97rem;
+        color: var(--text-secondary);
+        margin: 0 0 28px;
+        line-height: 1.6;
+      }
+
+      .confirm-thanks strong {
+        color: #5d3085;
+      }
+
+      .confirm-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 48px;
+        padding: 0 32px;
+        border-radius: 999px;
+        background: var(--bg-gradient-brand);
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: box-shadow 180ms ease, transform 120ms ease;
+        box-shadow: 0 4px 16px rgba(93, 48, 133, 0.22);
+      }
+
+      .confirm-cta:hover {
+        box-shadow: 0 10px 28px rgba(93, 48, 133, 0.38);
+        transform: translateY(-2px);
+      }
+
+      .resend-wrap {
+        margin: 0 0 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .resend-label {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin: 0;
+      }
+
+      .btn-resend {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        height: 42px;
+        padding: 0 24px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(93, 48, 133, 0.35);
+        background: transparent;
+        color: #5d3085;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: border-color 160ms, background 160ms, color 160ms, opacity 160ms;
+      }
+
+      .btn-resend:hover:not(:disabled) {
+        background: rgba(93, 48, 133, 0.07);
+        border-color: rgba(93, 48, 133, 0.6);
+      }
+
+      .btn-resend:disabled {
+        opacity: 0.48;
+        cursor: not-allowed;
+      }
+
+      .resend-feedback {
+        font-size: 0.82rem;
+        min-height: 18px;
+        margin: 0;
+        text-align: center;
+      }
+
+      .resend-feedback.ok  { color: #1a7f37; }
+      .resend-feedback.err { color: #c0392b; }
+
+      .confirm-notice {
+        background: rgba(93, 48, 133, 0.05);
+        border: 1px solid rgba(93, 48, 133, 0.14);
+        border-radius: 12px;
+        padding: 16px 20px;
+        font-size: 0.84rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin: 0 0 28px;
+        text-align: left;
+      }
+
+      .confirm-notice a {
+        color: #5d3085;
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
+      @media (max-width: 560px) {
+        .confirm-card {
+          padding: 36px 22px 32px;
+        }
+      }
+    </style>
+  </head>
+  <body class="auth-page">
+    <header class="navbar" id="navbar">
+      <div class="container nav-inner">
+        <a href="index.html" class="logo" aria-label="SmartBook AI - Inicio">
+          <img src="logo.png" alt="SmartBook AI" class="logo-img" height="36" />
+        </a>
+        <a href="index.html" class="nav-headmark" aria-label="SmartBook AI - Inicio">
+          <canvas class="nav-headmark-canvas" width="34" height="34" aria-hidden="true"></canvas>
+        </a>
+        <nav class="nav-links" aria-label="Enlaces principales">
+          <span class="nav-pill" aria-hidden="true"></span>
+          <a href="contact.html" data-label="Contáctanos"><span>Contáctanos</span></a>
+          <a href="about.html" data-label="Quiénes somos"><span>Quiénes somos</span></a>
+          <a href="pricing.html" data-label="Planes de suscripción"><span>Planes de suscripción</span></a>
+        </nav>
+        <div class="nav-actions">
+          <a class="btn btn-login" href="login.html" data-label="Iniciar sesión">
+            <span>Iniciar sesión</span>
+          </a>
+          <a class="btn btn-primary" href="register.html" data-label="Prueba gratis">
+            <span>Prueba gratis</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="auth-hero">
+        <div class="container auth-hero-content">
+          <span class="auth-hero-eyebrow">Cuenta creada</span>
+          <h1>¡Un paso más!</h1>
+          <p class="auth-hero-sub">Confirma tu dirección de correo para activar tu cuenta.</p>
+        </div>
+      </section>
+
+      <section class="confirm-section">
+        <div class="container">
+          <div class="confirm-card reveal">
+
+            <div class="confirm-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <polyline points="2,4 12,13 22,4" />
+              </svg>
+            </div>
+
+            <h1>Revisa tu correo</h1>
+
+            <p class="confirm-intro">
+              Te hemos enviado un mensaje de confirmación a:
+            </p>
+
+            <div class="confirm-email-pill" id="confirm-email" aria-live="polite">
+              tu dirección de correo
+            </div>
+
+            <div class="confirm-steps" role="list">
+              <p class="confirm-step" role="listitem">
+                <span class="step-num" aria-hidden="true">1</span>
+                <span>Abre tu bandeja de entrada y busca un correo de <strong>SmartBook AI</strong>.</span>
+              </p>
+              <p class="confirm-step" role="listitem">
+                <span class="step-num" aria-hidden="true">2</span>
+                <span>Haz clic en el <strong>enlace de confirmación</strong> para activar tu cuenta.</span>
+              </p>
+              <p class="confirm-step" role="listitem">
+                <span class="step-num" aria-hidden="true">3</span>
+                <span>¡Listo! Ya podrás acceder a SmartBook AI y disfrutar de tu prueba gratuita.</span>
+              </p>
+            </div>
+
+            <p class="confirm-spam">
+              ¿No encuentras el correo? Revisa tu carpeta de <strong>spam</strong> o correo no deseado.
+            </p>
+
+            <div class="resend-wrap">
+              <p class="resend-label">¿No te ha llegado el correo?</p>
+              <button type="button" id="btn-resend" class="btn-resend">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.36"/></svg>
+                <span id="btn-resend-label">Reenviar correo</span>
+              </button>
+              <p id="resend-feedback" class="resend-feedback" role="alert" aria-live="polite"></p>
+            </div>
+
+            <div class="confirm-notice">
+              Si el problema persiste, prueba a <a href="register.html">registrarte de nuevo</a> en unos 20 minutos.
+              Si el problema continúa, <a href="contact.html">contacta con nuestro equipo de soporte</a> — estaremos encantados de ayudarte.
+            </div>
+
+            <hr class="confirm-divider" />
+
+            <p class="confirm-thanks">
+              Gracias por confiar en <strong>SmartBook AI</strong>.<br />
+              Estamos encantados de tenerte con nosotros.
+            </p>
+
+            <a href="index.html" class="confirm-cta">Volver al inicio</a>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a href="index.html" class="logo" aria-label="SmartBook AI">
+          <img src="logo.png" alt="SmartBook AI" class="logo-img logo-footer" height="28" />
+        </a>
+        <nav aria-label="Enlaces footer">
+          <a href="privacy-policy.html">Política de Privacidad</a>
+          <a href="terms-and-conditions.html">Términos y Condiciones</a>
+          <a href="cookies.html">Cookies</a>
+          <a href="dpa.html">DPA</a>
+          <a href="legal-notice.html">Aviso legal</a>
+        </nav>
+        <p>© 2025 SmartBook AI</p>
+      </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+  </body>
+</html>

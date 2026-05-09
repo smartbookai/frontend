@@ -391,4 +391,227 @@
   hydrateShareLinks();
   lockVideos();
   hardenBlankTargetLinks();
+
+  const loginForm = document.getElementById("form-login");
+  if (loginForm) {
+    const loginErrorEl  = document.getElementById("login-error");
+    const loginBanner   = document.getElementById("login-banner");
+    const btnSubmit     = document.getElementById("btn-login-submit");
+    const btnLabel      = document.getElementById("btn-login-label");
+    const btnEye        = document.getElementById("btn-eye");
+    const pwInput       = document.getElementById("login-password");
+
+    if (loginBanner && new URLSearchParams(window.location.search).get("registro") === "ok") {
+      loginBanner.style.display = "block";
+    }
+
+    if (btnEye && pwInput) {
+      btnEye.addEventListener("click", () => {
+        const showing = pwInput.type === "text";
+        pwInput.type = showing ? "password" : "text";
+        btnEye.setAttribute("aria-label", showing ? "Mostrar contraseña" : "Ocultar contraseña");
+        const iconEl = document.getElementById("icon-eye");
+        if (iconEl) {
+          iconEl.innerHTML = showing
+            ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+            : '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+        }
+      });
+    }
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (loginErrorEl) { loginErrorEl.style.display = "none"; loginErrorEl.textContent = ""; }
+      if (btnSubmit) { btnSubmit.disabled = true; }
+      if (btnLabel)  { btnLabel.textContent = "Accediendo…"; }
+
+      const email    = document.getElementById("login-email")?.value || "";
+      const password = pwInput?.value || "";
+
+      try {
+        const res = await fetch("http://localhost:8080/api/login/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+          const msg = data.error || data.detail || "Credenciales incorrectas. Inténtalo de nuevo.";
+          if (loginErrorEl) { loginErrorEl.textContent = msg; loginErrorEl.style.display = "block"; }
+          if (btnSubmit) btnSubmit.disabled = false;
+          if (btnLabel)  btnLabel.textContent = "Iniciar sesión";
+          return;
+        }
+
+        window.location.href = data.redirect || "/dashboard/";
+      } catch {
+        if (loginErrorEl) {
+          loginErrorEl.textContent = "No se pudo conectar con el servidor. Comprueba tu conexión.";
+          loginErrorEl.style.display = "block";
+        }
+        if (btnSubmit) btnSubmit.disabled = false;
+        if (btnLabel)  btnLabel.textContent = "Iniciar sesión";
+      }
+    });
+  }
+
+  const registroForm = document.getElementById("form-registro");
+  if (registroForm) {
+    const errorEl = document.getElementById("registro-error");
+
+    const mostrarError = (msg) => {
+      if (!errorEl) return;
+      errorEl.textContent = msg;
+      errorEl.style.display = "block";
+    };
+
+    const ocultarError = () => {
+      if (!errorEl) return;
+      errorEl.style.display = "none";
+      errorEl.textContent = "";
+    };
+
+    registroForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      ocultarError();
+
+      const btn = registroForm.querySelector(".auth-submit");
+      btn.textContent = "Procesando…";
+      btn.disabled = true;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const payload = {
+        nombre: document.getElementById("name").value,
+        telefono: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
+        plan: urlParams.get("plan") || "sin_plan",
+      };
+
+      try {
+        const res = await fetch("http://localhost:8080/api/register/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          const msg =
+            data.email?.[0] ||
+            data.detail ||
+            data.error ||
+            Object.values(data)[0]?.[0] ||
+            "Ha ocurrido un error. Por favor, inténtalo de nuevo.";
+          mostrarError(msg);
+          btn.textContent = "Registrarme gratis";
+          btn.disabled = false;
+          return;
+        }
+
+        window.location.href = `confirm.html?email=${encodeURIComponent(payload.email)}`;
+      } catch (err) {
+        console.error("[registro]", err);
+        mostrarError("No hemos podido conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.");
+        btn.textContent = "Registrarme gratis";
+        btn.disabled = false;
+      }
+    });
+  }
+
+  const confirmEmailEl = document.getElementById("confirm-email");
+  if (confirmEmailEl) {
+    const email = new URLSearchParams(window.location.search).get("email");
+    if (email) confirmEmailEl.textContent = email;
+  }
+
+  const btnResend = document.getElementById("btn-resend");
+  if (btnResend) {
+    const COOLDOWN_MS = 3 * 60 * 1000;
+    const STORAGE_KEY = "resend_unlock_at";
+    const labelEl = document.getElementById("btn-resend-label");
+    const feedbackEl = document.getElementById("resend-feedback");
+    const email = new URLSearchParams(window.location.search).get("email") || "";
+
+    let countdownInterval = null;
+
+    const setFeedback = (msg, type) => {
+      if (!feedbackEl) return;
+      feedbackEl.textContent = msg;
+      feedbackEl.className = `resend-feedback${type ? ` ${type}` : ""}`;
+    };
+
+    const startCountdown = (unlockAt) => {
+      if (countdownInterval) clearInterval(countdownInterval);
+      btnResend.disabled = true;
+
+      const tick = () => {
+        const remaining = Math.max(0, unlockAt - Date.now());
+        if (remaining === 0) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+          btnResend.disabled = false;
+          if (labelEl) labelEl.textContent = "Reenviar correo";
+          return;
+        }
+        const mins = Math.floor(remaining / 60000);
+        const secs = Math.floor((remaining % 60000) / 1000);
+        if (labelEl) labelEl.textContent = `Reenviar en ${mins}:${String(secs).padStart(2, "0")}`;
+      };
+
+      tick();
+      countdownInterval = setInterval(tick, 1000);
+    };
+
+    const savedUnlockAt = Number(localStorage.getItem(STORAGE_KEY) || 0);
+    if (savedUnlockAt > Date.now()) {
+      startCountdown(savedUnlockAt);
+    }
+
+    btnResend.addEventListener("click", async () => {
+      if (btnResend.disabled) return;
+      if (!email) {
+        setFeedback("No se pudo identificar tu correo. Vuelve a la página de registro.", "err");
+        return;
+      }
+
+      btnResend.disabled = true;
+      if (labelEl) labelEl.textContent = "Enviando…";
+      setFeedback("", "");
+
+      try {
+        const res = await fetch("http://localhost:8080/api/resend-confirmation/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        if (res.status === 410) {
+          setFeedback("El registro ha expirado. Por favor, regístrate de nuevo.", "err");
+          btnResend.disabled = false;
+          if (labelEl) labelEl.textContent = "Reenviar correo";
+          return;
+        }
+
+        if (!res.ok && res.status !== 429) {
+          const data = await res.json().catch(() => ({}));
+          setFeedback(data.error || "No se pudo reenviar el correo. Inténtalo más tarde.", "err");
+          btnResend.disabled = false;
+          if (labelEl) labelEl.textContent = "Reenviar correo";
+          return;
+        }
+
+        const unlockAt = Date.now() + COOLDOWN_MS;
+        localStorage.setItem(STORAGE_KEY, String(unlockAt));
+        setFeedback("Correo reenviado. Revisa tu bandeja de entrada.", "ok");
+        startCountdown(unlockAt);
+      } catch {
+        setFeedback("No se pudo conectar con el servidor. Comprueba tu conexión.", "err");
+        btnResend.disabled = false;
+        if (labelEl) labelEl.textContent = "Reenviar correo";
+      }
+    });
+  }
 })();
