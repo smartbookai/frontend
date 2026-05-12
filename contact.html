@@ -1,4 +1,4 @@
-c<!doctype html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -109,6 +109,40 @@ c<!doctype html>
               </div>
 
               <div class="field">
+                <label for="contact-phone-number">Número de teléfono</label>
+                <div class="contact-phone-field" data-contact-phone>
+                  <button
+                    class="contact-phone-prefix-button"
+                    type="button"
+                    aria-label="Seleccionar prefijo telefónico"
+                    aria-expanded="false"
+                    aria-controls="contact-phone-dropdown"
+                  >
+                    <span class="contact-phone-prefix-flag" aria-hidden="true">🇪🇸</span>
+                    <span class="contact-phone-prefix-code">+34</span>
+                    <span class="contact-phone-prefix-arrow" aria-hidden="true">▼</span>
+                  </button>
+                  <input
+                    id="contact-phone-number"
+                    class="contact-phone-number"
+                    type="tel"
+                    inputmode="tel"
+                    autocomplete="tel-national"
+                    maxlength="30"
+                    pattern="[0-9\s-]*"
+                  />
+                  <input id="phone" type="hidden" name="phone" value="" />
+                  <div
+                    id="contact-phone-dropdown"
+                    class="contact-phone-dropdown"
+                    role="listbox"
+                    aria-label="Prefijos telefónicos"
+                    hidden
+                  ></div>
+                </div>
+              </div>
+
+              <div class="field">
                 <label for="message">Mensaje *</label>
                 <textarea id="message" name="Mensaje" maxlength="2000" required></textarea>
               </div>
@@ -147,8 +181,5 @@ c<!doctype html>
     <script src="main.js?v=20260427-3" defer></script>
   </body>
 </html>
-
-
-
 
 

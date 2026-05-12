@@ -270,6 +270,296 @@
     return typeof maxLength === "number" ? normalized.slice(0, maxLength) : normalized;
   };
 
+  const CONTACT_PHONE_COUNTRIES = [
+    ["🇦🇫", "Afganistan", "+93"],
+    ["🇦🇱", "Albania", "+355"],
+    ["🇩🇪", "Alemania", "+49"],
+    ["🇦🇩", "Andorra", "+376"],
+    ["🇦🇴", "Angola", "+244"],
+    ["🇦🇬", "Antigua y Barbuda", "+1-268"],
+    ["🇸🇦", "Arabia Saudita", "+966"],
+    ["🇩🇿", "Argelia", "+213"],
+    ["🇦🇷", "Argentina", "+54"],
+    ["🇦🇲", "Armenia", "+374"],
+    ["🇦🇺", "Australia", "+61"],
+    ["🇦🇹", "Austria", "+43"],
+    ["🇦🇿", "Azerbaiyan", "+994"],
+    ["🇧🇸", "Bahamas", "+1-242"],
+    ["🇧🇭", "Barein", "+973"],
+    ["🇧🇩", "Banglades", "+880"],
+    ["🇧🇧", "Barbados", "+1-246"],
+    ["🇧🇪", "Belgica", "+32"],
+    ["🇧🇿", "Belice", "+501"],
+    ["🇧🇯", "Benin", "+229"],
+    ["🇧🇾", "Bielorrusia", "+375"],
+    ["🇧🇴", "Bolivia", "+591"],
+    ["🇧🇦", "Bosnia y Herzegovina", "+387"],
+    ["🇧🇼", "Botsuana", "+267"],
+    ["🇧🇷", "Brasil", "+55"],
+    ["🇧🇳", "Brunei", "+673"],
+    ["🇧🇬", "Bulgaria", "+359"],
+    ["🇧🇫", "Burkina Faso", "+226"],
+    ["🇧🇮", "Burundi", "+257"],
+    ["🇧🇹", "Butan", "+975"],
+    ["🇨🇻", "Cabo Verde", "+238"],
+    ["🇰🇭", "Camboya", "+855"],
+    ["🇨🇲", "Camerun", "+237"],
+    ["🇨🇦", "Canada", "+1"],
+    ["🇶🇦", "Catar", "+974"],
+    ["🇹🇩", "Chad", "+235"],
+    ["🇨🇱", "Chile", "+56"],
+    ["🇨🇳", "China", "+86"],
+    ["🇨🇾", "Chipre", "+357"],
+    ["🇨🇴", "Colombia", "+57"],
+    ["🇰🇲", "Comoras", "+269"],
+    ["🇰🇵", "Corea del Norte", "+850"],
+    ["🇰🇷", "Corea del Sur", "+82"],
+    ["🇨🇮", "Costa de Marfil", "+225"],
+    ["🇨🇷", "Costa Rica", "+506"],
+    ["🇭🇷", "Croacia", "+385"],
+    ["🇨🇺", "Cuba", "+53"],
+    ["🇩🇰", "Dinamarca", "+45"],
+    ["🇩🇲", "Dominica", "+1-767"],
+    ["🇪🇨", "Ecuador", "+593"],
+    ["🇪🇬", "Egipto", "+20"],
+    ["🇸🇻", "El Salvador", "+503"],
+    ["🇦🇪", "Emiratos Arabes Unidos", "+971"],
+    ["🇪🇷", "Eritrea", "+291"],
+    ["🇸🇰", "Eslovaquia", "+421"],
+    ["🇸🇮", "Eslovenia", "+386"],
+    ["🇪🇸", "España", "+34"],
+    ["🇺🇸", "Estados Unidos", "+1"],
+    ["🇪🇪", "Estonia", "+372"],
+    ["🇸🇿", "Esuatini", "+268"],
+    ["🇪🇹", "Etiopia", "+251"],
+    ["🇵🇭", "Filipinas", "+63"],
+    ["🇫🇮", "Finlandia", "+358"],
+    ["🇫🇯", "Fiyi", "+679"],
+    ["🇫🇷", "Francia", "+33"],
+    ["🇬🇦", "Gabon", "+241"],
+    ["🇬🇲", "Gambia", "+220"],
+    ["🇬🇪", "Georgia", "+995"],
+    ["🇬🇭", "Ghana", "+233"],
+    ["🇬🇩", "Granada", "+1-473"],
+    ["🇬🇷", "Grecia", "+30"],
+    ["🇬🇹", "Guatemala", "+502"],
+    ["🇬🇳", "Guinea", "+224"],
+    ["🇬🇶", "Guinea Ecuatorial", "+240"],
+    ["🇬🇼", "Guinea-Bisau", "+245"],
+    ["🇬🇾", "Guyana", "+592"],
+    ["🇭🇹", "Haiti", "+509"],
+    ["🇭🇳", "Honduras", "+504"],
+    ["🇭🇺", "Hungria", "+36"],
+    ["🇮🇳", "India", "+91"],
+    ["🇮🇩", "Indonesia", "+62"],
+    ["🇮🇶", "Irak", "+964"],
+    ["🇮🇷", "Iran", "+98"],
+    ["🇮🇪", "Irlanda", "+353"],
+    ["🇮🇸", "Islandia", "+354"],
+    ["🇲🇭", "Islas Marshall", "+692"],
+    ["🇸🇧", "Islas Salomon", "+677"],
+    ["🇮🇱", "Israel", "+972"],
+    ["🇮🇹", "Italia", "+39"],
+    ["🇯🇲", "Jamaica", "+1-876"],
+    ["🇯🇵", "Japon", "+81"],
+    ["🇯🇴", "Jordania", "+962"],
+    ["🇰🇿", "Kazajistan", "+7"],
+    ["🇰🇪", "Kenia", "+254"],
+    ["🇰🇬", "Kirguistan", "+996"],
+    ["🇰🇮", "Kiribati", "+686"],
+    ["🇽🇰", "Kosovo", "+383"],
+    ["🇰🇼", "Kuwait", "+965"],
+    ["🇱🇦", "Laos", "+856"],
+    ["🇱🇸", "Lesoto", "+266"],
+    ["🇱🇻", "Letonia", "+371"],
+    ["🇱🇧", "Libano", "+961"],
+    ["🇱🇷", "Liberia", "+231"],
+    ["🇱🇾", "Libia", "+218"],
+    ["🇱🇮", "Liechtenstein", "+423"],
+    ["🇱🇹", "Lituania", "+370"],
+    ["🇱🇺", "Luxemburgo", "+352"],
+    ["🇲🇰", "Macedonia del Norte", "+389"],
+    ["🇲🇬", "Madagascar", "+261"],
+    ["🇲🇾", "Malasia", "+60"],
+    ["🇲🇼", "Malaui", "+265"],
+    ["🇲🇻", "Maldivas", "+960"],
+    ["🇲🇱", "Mali", "+223"],
+    ["🇲🇹", "Malta", "+356"],
+    ["🇲🇦", "Marruecos", "+212"],
+    ["🇲🇺", "Mauricio", "+230"],
+    ["🇲🇷", "Mauritania", "+222"],
+    ["🇲🇽", "Mexico", "+52"],
+    ["🇫🇲", "Micronesia", "+691"],
+    ["🇲🇩", "Moldavia", "+373"],
+    ["🇲🇨", "Monaco", "+377"],
+    ["🇲🇳", "Mongolia", "+976"],
+    ["🇲🇪", "Montenegro", "+382"],
+    ["🇲🇿", "Mozambique", "+258"],
+    ["🇲🇲", "Myanmar", "+95"],
+    ["🇳🇦", "Namibia", "+264"],
+    ["🇳🇷", "Nauru", "+674"],
+    ["🇳🇵", "Nepal", "+977"],
+    ["🇳🇮", "Nicaragua", "+505"],
+    ["🇳🇪", "Niger", "+227"],
+    ["🇳🇬", "Nigeria", "+234"],
+    ["🇳🇴", "Noruega", "+47"],
+    ["🇳🇿", "Nueva Zelanda", "+64"],
+    ["🇴🇲", "Oman", "+968"],
+    ["🇳🇱", "Paises Bajos", "+31"],
+    ["🇵🇰", "Pakistan", "+92"],
+    ["🇵🇼", "Palaos", "+680"],
+    ["🇵🇸", "Palestina", "+970"],
+    ["🇵🇦", "Panama", "+507"],
+    ["🇵🇬", "Papua Nueva Guinea", "+675"],
+    ["🇵🇾", "Paraguay", "+595"],
+    ["🇵🇪", "Peru", "+51"],
+    ["🇵🇱", "Polonia", "+48"],
+    ["🇵🇹", "Portugal", "+351"],
+    ["🇬🇧", "Reino Unido", "+44"],
+    ["🇨🇫", "Republica Centroafricana", "+236"],
+    ["🇨🇿", "Republica Checa", "+420"],
+    ["🇨🇬", "Republica del Congo", "+242"],
+    ["🇨🇩", "Republica Democratica del Congo", "+243"],
+    ["🇩🇴", "Republica Dominicana", "+1-809"],
+    ["🇷🇼", "Ruanda", "+250"],
+    ["🇷🇴", "Rumania", "+40"],
+    ["🇷🇺", "Rusia", "+7"],
+    ["🇼🇸", "Samoa", "+685"],
+    ["🇰🇳", "San Cristobal y Nieves", "+1-869"],
+    ["🇸🇲", "San Marino", "+378"],
+    ["🇻🇨", "San Vicente y las Granadinas", "+1-784"],
+    ["🇱🇨", "Santa Lucia", "+1-758"],
+    ["🇸🇹", "Santo Tome y Principe", "+239"],
+    ["🇸🇳", "Senegal", "+221"],
+    ["🇷🇸", "Serbia", "+381"],
+    ["🇸🇨", "Seychelles", "+248"],
+    ["🇸🇱", "Sierra Leona", "+232"],
+    ["🇸🇬", "Singapur", "+65"],
+    ["🇸🇾", "Siria", "+963"],
+    ["🇸🇴", "Somalia", "+252"],
+    ["🇱🇰", "Sri Lanka", "+94"],
+    ["🇿🇦", "Sudafrica", "+27"],
+    ["🇸🇩", "Sudan", "+249"],
+    ["🇸🇸", "Sudan del Sur", "+211"],
+    ["🇸🇪", "Suecia", "+46"],
+    ["🇨🇭", "Suiza", "+41"],
+    ["🇸🇷", "Surinam", "+597"],
+    ["🇹🇭", "Tailandia", "+66"],
+    ["🇹🇼", "Taiwan", "+886"],
+    ["🇹🇿", "Tanzania", "+255"],
+    ["🇹🇯", "Tayikistan", "+992"],
+    ["🇹🇱", "Timor Oriental", "+670"],
+    ["🇹🇬", "Togo", "+228"],
+    ["🇹🇴", "Tonga", "+676"],
+    ["🇹🇹", "Trinidad y Tobago", "+1-868"],
+    ["🇹🇳", "Tunez", "+216"],
+    ["🇹🇲", "Turkmenistan", "+993"],
+    ["🇹🇷", "Turquia", "+90"],
+    ["🇹🇻", "Tuvalu", "+688"],
+    ["🇺🇦", "Ucrania", "+380"],
+    ["🇺🇬", "Uganda", "+256"],
+    ["🇺🇾", "Uruguay", "+598"],
+    ["🇺🇿", "Uzbekistan", "+998"],
+    ["🇻🇺", "Vanuatu", "+678"],
+    ["🇻🇦", "Vaticano", "+379"],
+    ["🇻🇪", "Venezuela", "+58"],
+    ["🇻🇳", "Vietnam", "+84"],
+    ["🇾🇪", "Yemen", "+967"],
+    ["🇩🇯", "Yibuti", "+253"],
+    ["🇿🇲", "Zambia", "+260"],
+    ["🇿🇼", "Zimbabue", "+263"],
+  ].sort((a, b) => a[1].localeCompare(b[1], "es", { sensitivity: "base" }));
+
+  const initContactPhoneField = () => {
+    const phoneField = document.querySelector("[data-contact-phone]");
+    if (!phoneField) return;
+
+    const prefixButton = phoneField.querySelector(".contact-phone-prefix-button");
+    const prefixFlag = phoneField.querySelector(".contact-phone-prefix-flag");
+    const prefixCode = phoneField.querySelector(".contact-phone-prefix-code");
+    const numberInput = phoneField.querySelector(".contact-phone-number");
+    const hiddenInput = phoneField.querySelector('input[name="phone"]');
+    const dropdown = phoneField.querySelector(".contact-phone-dropdown");
+    if (!prefixButton || !prefixFlag || !prefixCode || !numberInput || !hiddenInput || !dropdown) return;
+
+    let selectedCountry = CONTACT_PHONE_COUNTRIES.find((country) => country[1] === "España") || CONTACT_PHONE_COUNTRIES[0];
+
+    const updateHiddenPhone = () => {
+      const number = String(numberInput.value || "").trim();
+      hiddenInput.value = number ? `${selectedCountry[2]} ${number}` : "";
+    };
+
+    const setCountry = (country) => {
+      selectedCountry = country;
+      prefixFlag.textContent = country[0];
+      prefixCode.textContent = country[2];
+      dropdown.querySelectorAll(".contact-phone-option").forEach((option) => {
+        const isSelected = option.dataset.code === country[2] && option.dataset.country === country[1];
+        option.classList.toggle("is-selected", isSelected);
+        option.setAttribute("aria-selected", String(isSelected));
+      });
+      updateHiddenPhone();
+    };
+
+    const closeDropdown = () => {
+      dropdown.hidden = true;
+      prefixButton.setAttribute("aria-expanded", "false");
+    };
+
+    const openDropdown = () => {
+      dropdown.hidden = false;
+      prefixButton.setAttribute("aria-expanded", "true");
+    };
+
+    const toggleDropdown = () => {
+      if (dropdown.hidden) {
+        openDropdown();
+      } else {
+        closeDropdown();
+      }
+    };
+
+    CONTACT_PHONE_COUNTRIES.forEach((country) => {
+      const option = document.createElement("button");
+      option.type = "button";
+      option.className = "contact-phone-option";
+      option.setAttribute("role", "option");
+      option.dataset.country = country[1];
+      option.dataset.code = country[2];
+      option.innerHTML = `
+        <span class="contact-phone-option-flag" aria-hidden="true">${country[0]}</span>
+        <span class="contact-phone-option-name">${country[1]}</span>
+        <span class="contact-phone-option-code">${country[2]}</span>
+      `;
+      option.addEventListener("click", () => {
+        setCountry(country);
+        closeDropdown();
+        numberInput.focus();
+      });
+      dropdown.appendChild(option);
+    });
+
+    prefixButton.addEventListener("click", toggleDropdown);
+
+    numberInput.addEventListener("input", () => {
+      numberInput.value = numberInput.value.replace(/[^\d\s-]/g, "");
+      updateHiddenPhone();
+    });
+
+    phoneField.closest("form")?.addEventListener("submit", updateHiddenPhone);
+
+    document.addEventListener("click", (event) => {
+      if (!phoneField.contains(event.target)) closeDropdown();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeDropdown();
+    });
+
+    setCountry(selectedCountry);
+    closeDropdown();
+  };
+
   const hardenBlankTargetLinks = () => {
     const externalLinks = document.querySelectorAll('a[target="_blank"]');
     if (externalLinks.length === 0) return;
@@ -350,6 +640,7 @@
   }
 
   prepareRevealPlaybackVideos();
+  initContactPhoneField();
 
   if (revealElements.length > 0 && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver(
