@@ -27,8 +27,15 @@
   const lockedVideos = document.querySelectorAll("[data-locked-video]");
   const revealPlaybackVideos = document.querySelectorAll("[data-play-after-reveal]");
 
+  const API_BASE_URL = "http://127.0.0.1:8080";
   const TOP_THRESHOLD = 4;
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const PHONE_REGEX = /^[0-9+\s-]+$/;
+  const PASSWORD_MIN_LENGTH = 8;
+  const PASSWORD_MAX_LENGTH = 256;
+  const DEFAULT_REDIRECT = "/dashboard/";
+  const DEFAULT_PLAN = "sin_plan";
+  const ALLOWED_PLAN_VALUES = new Set(["starter", "lite", "smart", "power", "ultra", DEFAULT_PLAN]);
   const REL_NOOPENER = "noopener";
   const REL_NOREFERRER = "noreferrer";
   const BRAND_PURPLE_FALLBACK = { r: 93, g: 48, b: 133 };
@@ -40,6 +47,52 @@
   let scrollDirection = "down";
   let isLayoutFrameQueued = false;
   let isResizeFrameQueued = false;
+
+  const apiUrl = (path) => `${API_BASE_URL}${path}`;
+
+  const normalizeText = (value) => String(value ?? "").trim();
+
+  const normalizeEmail = (value) => normalizeText(value).toLowerCase();
+
+  const isValidEmail = (value) => EMAIL_REGEX.test(normalizeEmail(value));
+
+  const isValidPassword = (value) => {
+    const password = String(value ?? "");
+    return password.length >= PASSWORD_MIN_LENGTH && password.length <= PASSWORD_MAX_LENGTH;
+  };
+
+  const isValidPhone = (value) => {
+    const phone = normalizeText(value);
+    return phone.length > 0 && phone.length <= 30 && PHONE_REGEX.test(phone);
+  };
+
+  const normalizePlan = (value) => {
+    const plan = normalizeText(value || DEFAULT_PLAN).toLowerCase();
+    return ALLOWED_PLAN_VALUES.has(plan) ? plan : DEFAULT_PLAN;
+  };
+
+  const safeInternalRedirect = (redirect) => {
+    if (typeof redirect !== "string" || redirect.trim() === "") return DEFAULT_REDIRECT;
+
+    try {
+      const url = new URL(redirect, window.location.origin);
+      if (url.origin !== window.location.origin) return DEFAULT_REDIRECT;
+      if (!url.pathname.startsWith("/")) return DEFAULT_REDIRECT;
+      return `${url.pathname}${url.search}${url.hash}`;
+    } catch {
+      return DEFAULT_REDIRECT;
+    }
+  };
+
+  const setSvgIcon = (svg, elements) => {
+    if (!svg) return;
+    svg.replaceChildren();
+    elements.forEach(({ tag, attrs }) => {
+      const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      Object.entries(attrs).forEach(([name, value]) => node.setAttribute(name, value));
+      svg.appendChild(node);
+    });
+  };
 
   const parseHexToRgb = (rawHex) => {
     const hex = String(rawHex ?? "").trim().replace(/^#/, "");
@@ -483,9 +536,15 @@
         btnEye.setAttribute("aria-label", showing ? "Mostrar contraseña" : "Ocultar contraseña");
         const iconEl = document.getElementById("icon-eye");
         if (iconEl) {
-          iconEl.innerHTML = showing
-            ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
-            : '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+          setSvgIcon(iconEl, showing
+            ? [
+                { tag: "path", attrs: { d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" } },
+                { tag: "circle", attrs: { cx: "12", cy: "12", r: "3" } },
+              ]
+            : [
+                { tag: "path", attrs: { d: "M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" } },
+                { tag: "line", attrs: { x1: "1", y1: "1", x2: "23", y2: "23" } },
+              ]);
         }
       });
     }
@@ -496,11 +555,21 @@
       if (btnSubmit) { btnSubmit.disabled = true; }
       if (btnLabel)  { btnLabel.textContent = "Accediendo…"; }
 
-      const email    = document.getElementById("login-email")?.value || "";
+      const email    = normalizeEmail(document.getElementById("login-email")?.value);
       const password = pwInput?.value || "";
 
+      if (!isValidEmail(email) || !isValidPassword(password)) {
+        if (loginErrorEl) {
+          loginErrorEl.textContent = "Credenciales incorrectas. Inténtalo de nuevo.";
+          loginErrorEl.style.display = "block";
+        }
+        if (btnSubmit) btnSubmit.disabled = false;
+        if (btnLabel)  btnLabel.textContent = "Iniciar sesión";
+        return;
+      }
+
       try {
-        const res = await fetch("http://127.0.0.1:8080/api/login/", {
+        const res = await fetch(apiUrl("/api/login/"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -517,7 +586,7 @@
           return;
         }
 
-        window.location.href = data.redirect || "/dashboard/";
+        window.location.href = data.redirect || "http://127.0.0.1:8080/";
       } catch {
         if (loginErrorEl) {
           loginErrorEl.textContent = "No se pudo conectar con el servidor. Comprueba tu conexión.";
@@ -577,10 +646,10 @@
       const emailValue = document.getElementById("email").value;
 
       const payload = {
-        nombre:   document.getElementById("name").value,
-        telefono: document.getElementById("phone").value,
-        email:    emailValue,
-        plan:     urlParams.get("plan") || "sin_plan",
+        nombre:   normalizeText(document.getElementById("name").value),
+        telefono: normalizeText(document.getElementById("phone").value),
+        email:    normalizeEmail(document.getElementById("email").value),
+        plan:     normalizePlan(urlParams.get("plan")),
       };
 
       if (googleData) {
@@ -589,8 +658,21 @@
         payload.password = document.getElementById("password").value;
       }
 
+      if (!payload.nombre || !isValidPhone(payload.telefono) || !isValidEmail(payload.email)) {
+        mostrarError("Revisa los campos del formulario e inténtalo de nuevo.");
+        btn.textContent = "Registrarme gratis";
+        btn.disabled = false;
+        return;
+      }
+      if (!googleData && !isValidPassword(payload.password)) {
+        mostrarError("La contraseña debe tener al menos 8 caracteres.");
+        btn.textContent = "Registrarme gratis";
+        btn.disabled = false;
+        return;
+      }
+
       try {
-        const res = await fetch("http://127.0.0.1:8080/api/register/", {
+        const res = await fetch(apiUrl("/api/register/"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -633,7 +715,7 @@
     const STORAGE_KEY = "resend_unlock_at";
     const labelEl = document.getElementById("btn-resend-label");
     const feedbackEl = document.getElementById("resend-feedback");
-    const email = new URLSearchParams(window.location.search).get("email") || "";
+    const email = normalizeEmail(new URLSearchParams(window.location.search).get("email"));
 
     let countdownInterval = null;
 
@@ -672,7 +754,7 @@
 
     btnResend.addEventListener("click", async () => {
       if (btnResend.disabled) return;
-      if (!email) {
+      if (!isValidEmail(email)) {
         setFeedback("No se pudo identificar tu correo. Vuelve a la página de registro.", "err");
         return;
       }
@@ -682,7 +764,7 @@
       setFeedback("", "");
 
       try {
-        const res = await fetch("http://127.0.0.1:8080/api/resend-confirmation/", {
+        const res = await fetch(apiUrl("/api/resend-confirmation/"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),

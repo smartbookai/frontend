@@ -82,6 +82,8 @@ c<!doctype html>
             <input type="hidden" name="_subject" value="Nueva consulta desde SmartBook AI" />
             <input type="hidden" name="_template" value="table" />
             <input type="hidden" name="_captcha" value="false" />
+            <!-- Honeypot frontend-only; spam y rate limiting reales deben aplicarse fuera del frontend. -->
+            <input class="form-honeypot" type="text" name="_honey" tabindex="-1" autocomplete="off" />
 
             <div class="form-grid">
               <div class="field">
@@ -145,7 +147,6 @@ c<!doctype html>
     <script src="main.js?v=20260427-3" defer></script>
   </body>
 </html>
-
 
 
 
