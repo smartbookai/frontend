@@ -392,6 +392,77 @@
   lockVideos();
   hardenBlankTargetLinks();
 
+  const GOOGLE_CLIENT_ID = "777000793019-pi4b3ijo5jcn2l79brbv9d0f3a4lg59s.apps.googleusercontent.com";
+
+  const GOOGLE_SESSION_KEY = "sba_google_auth";
+
+  const handleGoogleToken = async (tokenResponse) => {
+    const btnGoogle  = document.getElementById("btn-google");
+    const loginError = document.getElementById("login-error");
+
+    if (tokenResponse.error) {
+      if (loginError) { loginError.textContent = "Autenticación con Google cancelada."; loginError.style.display = "block"; }
+      return;
+    }
+
+    if (btnGoogle) btnGoogle.disabled = true;
+    if (loginError) loginError.style.display = "none";
+
+    let email = "", name = "";
+    try {
+      const uiRes = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+        headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+      });
+      const ui = await uiRes.json();
+      email = ui.email || "";
+      name  = ui.name  || "";
+    } catch { /* continúa sin datos */ }
+
+    try {
+      const res  = await fetch("http://127.0.0.1:8080/api/auth/google/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ access_token: tokenResponse.access_token }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        if (loginError) { loginError.textContent = data.error || "Error al iniciar sesión con Google."; loginError.style.display = "block"; }
+        if (btnGoogle) btnGoogle.disabled = false;
+        return;
+      }
+
+      if (data.action === "register") {
+        sessionStorage.setItem(GOOGLE_SESSION_KEY, JSON.stringify({ access_token: tokenResponse.access_token, email, name }));
+        window.location.href = "pricing.html";
+        return;
+      }
+
+      window.location.href = data.redirect || "http://127.0.0.1:8080/";
+    } catch {
+      if (loginError) { loginError.textContent = "No se pudo conectar con el servidor."; loginError.style.display = "block"; }
+      if (btnGoogle) btnGoogle.disabled = false;
+    }
+  };
+
+  const initGoogleAuth = () => {
+    if (!window.google?.accounts?.oauth2) return;
+
+    const btnGoogle = document.getElementById("btn-google");
+    if (!btnGoogle) return;
+
+    const tokenClient = window.google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: "openid email profile",
+      callback: handleGoogleToken,
+    });
+
+    btnGoogle.addEventListener("click", () => tokenClient.requestAccessToken());
+  };
+
+  window.addEventListener("load", initGoogleAuth);
+
   const loginForm = document.getElementById("form-login");
   if (loginForm) {
     const loginErrorEl  = document.getElementById("login-error");
@@ -429,9 +500,10 @@
       const password = pwInput?.value || "";
 
       try {
-        const res = await fetch("http://localhost:8080/api/login/", {
+        const res = await fetch("http://127.0.0.1:8080/api/login/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ email, password }),
         });
 
@@ -473,6 +545,26 @@
       errorEl.textContent = "";
     };
 
+    // Detectar si viene de Google
+    const googleRaw = sessionStorage.getItem(GOOGLE_SESSION_KEY);
+    const googleData = googleRaw ? JSON.parse(googleRaw) : null;
+
+    if (googleData) {
+      const nameInput     = document.getElementById("name");
+      const emailInput    = document.getElementById("email");
+      const passwordField = document.getElementById("field-password");
+      const passwordInput = document.getElementById("password");
+      const banner        = document.getElementById("google-banner");
+      const emailLabel    = document.getElementById("google-email-label");
+
+      if (nameInput && googleData.name)   { nameInput.value = googleData.name; }
+      if (emailInput && googleData.email) { emailInput.value = googleData.email; emailInput.readOnly = true; }
+      if (passwordField) { passwordField.style.display = "none"; }
+      if (passwordInput) { passwordInput.required = false; passwordInput.removeAttribute("minlength"); }
+      if (banner)        { banner.style.display = "flex"; }
+      if (emailLabel)    { emailLabel.textContent = googleData.email; }
+    }
+
     registroForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       ocultarError();
@@ -482,16 +574,23 @@
       btn.disabled = true;
 
       const urlParams = new URLSearchParams(window.location.search);
+      const emailValue = document.getElementById("email").value;
+
       const payload = {
-        nombre: document.getElementById("name").value,
+        nombre:   document.getElementById("name").value,
         telefono: document.getElementById("phone").value,
-        email: document.getElementById("email").value,
-        password: document.getElementById("password").value,
-        plan: urlParams.get("plan") || "sin_plan",
+        email:    emailValue,
+        plan:     urlParams.get("plan") || "sin_plan",
       };
 
+      if (googleData) {
+        payload.google_access_token = googleData.access_token;
+      } else {
+        payload.password = document.getElementById("password").value;
+      }
+
       try {
-        const res = await fetch("http://localhost:8080/api/register/", {
+        const res = await fetch("http://127.0.0.1:8080/api/register/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -511,7 +610,8 @@
           return;
         }
 
-        window.location.href = `confirm.html?email=${encodeURIComponent(payload.email)}`;
+        sessionStorage.removeItem(GOOGLE_SESSION_KEY);
+        window.location.href = `confirm.html?email=${encodeURIComponent(emailValue)}`;
       } catch (err) {
         console.error("[registro]", err);
         mostrarError("No hemos podido conectar con el servidor. Comprueba tu conexión e inténtalo de nuevo.");
@@ -582,7 +682,7 @@
       setFeedback("", "");
 
       try {
-        const res = await fetch("http://localhost:8080/api/resend-confirmation/", {
+        const res = await fetch("http://127.0.0.1:8080/api/resend-confirmation/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
